@@ -74,6 +74,5 @@ bool	parse_map(t_data *data, char *file);
 
 //utils
 bool	is_digit(char *str);
-char	**file_to_map(char *file);
 
 #endif
