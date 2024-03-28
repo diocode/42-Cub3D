@@ -14,18 +14,23 @@
 
 static void	save_identifier(t_data *data, char *line)
 {
-	if (line[0] == 'N' && line[1] == 'O')
-		data->map->no = ft_substr(line, 3, ft_strlen(line) - 4);
-	else if (line[0] == 'S' && line[1] == 'O')
-		data->map->so =ft_substr(line, 3, ft_strlen(line) - 4);
-	else if (line[0] == 'W' && line[1] == 'E')
-		data->map->we = ft_substr(line, 3, ft_strlen(line) - 4);
-	else if (line[0] == 'E' && line[1] == 'A')
-		data->map->ea = ft_substr(line, 3, ft_strlen(line) - 4);
-	else if (line[0] == 'F')
-		data->map->f = ft_substr(line, 2, ft_strlen(line) - 3);
-	else if (line[0] == 'C')
-		data->map->c = ft_substr(line, 2, ft_strlen(line) - 3);
+	int i;
+
+	i = 0;
+	while (line[i] == ' ')
+		i++;
+	if (line[i] == 'N' && line[i + 1] == 'O')
+		data->map->no = trim_content(line + i + 2);
+	else if (line[i] == 'S' && line[i + 1] == 'O')
+		data->map->so = trim_content(line + i + 2);
+	else if (line[i] == 'W' && line[i + 1] == 'E')
+		data->map->we = trim_content(line + i + 2);
+	else if (line[i] == 'E' && line[i + 1] == 'A')
+		data->map->ea = trim_content(line + i + 2);
+	else if (line[i] == 'F')
+		data->map->f = trim_content(line + i + 1);
+	else if (line[i] == 'C')
+		data->map->c = trim_content(line + i + 1);
 }
 
 bool	parse_identifiers(t_data *data, char *file)
@@ -49,14 +54,20 @@ bool	parse_identifiers(t_data *data, char *file)
 	return (ft_putstr_fd("Error: invalid identifiers.\n", 2), false);
 }
 
-static bool	check_start_end(char *str)
+static bool	check_start(const char *str)
 {
 	int 	i;
+	bool	wall;
 
+	wall = false;
 	i = 0;
-	while (str[i] == ' ' || str[i] == '1')
+	while (str[i] == ' ' || str[i] == '1' || str[i] == '\n')
+	{
+		if (str[i] == '1')
+			wall = true;
 		i++;
-	if (i != 0 && (str[i] == '\0' || str[i] == '\n'))
+	}
+	if (i != 0 && str[i] == '\0' && wall)
 		return (true);
 	return (false);
 }
@@ -76,15 +87,10 @@ static int	map_lines(char *file)
 	gnl = get_next_line(fd);
 	while (gnl)
 	{
-		if (!start)
-		{
-			start = check_start_end(gnl);
+		if (check_start(gnl))
+			start = true;
+		if (start && gnl[0] != '\0' && gnl[0] != '\n')
 			lines++;
-		}
-		else
-			lines++;
-		if (start && check_start_end(gnl) && lines > 1)
-			break ;
 		free(gnl);
 		gnl = get_next_line(fd);
 	}
@@ -92,34 +98,45 @@ static int	map_lines(char *file)
 	close(fd);
 	return (lines);
 }
+static	char** save_map(char **map, int fd)
+{
+	char	*gnl;
+	bool	start;
+	int 	i;
+
+	start = false;
+	gnl = get_next_line(fd);
+	i = 0;
+	while (gnl)
+	{
+		if (check_start(gnl))
+			start = true;
+		if (start && gnl[0] != '\0' && gnl[0] != '\n')
+			map[i++] = ft_strdup(gnl);
+		free(gnl);
+		gnl = get_next_line(fd);
+	}
+	free(gnl);
+	return (map);
+}
 
 static char	**get_map(char *file)
 {
 	int		lines;
-//	int		fd;
-//	int		i;
+	int		fd;
 	char	**map;
 
 	lines = map_lines(file);
-	printf("lines: %d\n", lines);
+	if (!lines)
+		return (NULL);
 	map = ft_calloc(lines + 1, sizeof(char *));
 	if (!map)
 		return (NULL);
-	/*fd = open(file, O_RDONLY);
+	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
-	i = -1;
-	while (++i < lines)
-	{
-		map[i] = get_next_line(fd);
-		if (!map[i] || map[i][0] == '\r')
-		{
-			free_array(map, lines);
-			close(fd);
-			return (NULL);
-		}
-	}
-	close(fd);*/
+	save_map(map, fd);
+	close(fd);
 	return (map);
 }
 

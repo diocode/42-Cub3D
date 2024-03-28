@@ -12,6 +12,27 @@
 
 #include "../includes/cub3d.h"
 
+/* trim: spaces and new line */
+char *trim_content(char *str)
+{
+	int i;
+	int j;
+	char *content;
+
+	if (!str && !*str)
+		return (NULL);
+	i = 0;
+	while (str[i] == ' ')
+		i++;
+	j = ft_strlen(str) - 1;
+	while (str[j] == ' ')
+		j--;
+	if (str[j] == '\n')
+		j--;
+	content = ft_substr(str, i, j - i + 1);
+	return (content);
+}
+
 bool	is_digit(char *str)
 {
 	int i;

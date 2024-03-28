@@ -12,6 +12,16 @@
 
 #include "../includes/cub3d.h"
 
+static	void	dev_mod(t_data *data)
+{
+	int i = 0;
+	printf("NO-> \"%s\"\nSO-> \"%s\"\nWE-> \"%s\"\nEA-> \"%s\"\nF-> \"%s\"\nC-> \"%s\"\n\n", data->map->no, data->map->so, data->map->we, data->map->ea, data->map->f, data->map->c);
+	while (data->map->layout[i] != NULL) {
+		printf("%s", data->map->layout[i]);
+		i++;
+	}
+	printf("\n");
+}
 int	main(int ac, char **av)
 {
 	t_data	*data;
@@ -23,6 +33,6 @@ int	main(int ac, char **av)
 	data = init_data();
 	if (!data || !valid_map(data, av[1]))
 		return (free_data(data), 1);
-	printf("NO|%s\nSO|%s\nWE|%s\nEA|%s\nF|%s\nC|%s\n", data->map->no, data->map->so, data->map->we, data->map->ea, data->map->f, data->map->c);
+	dev_mod(data);
 	free_data(data);
 }

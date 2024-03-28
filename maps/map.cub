@@ -1,10 +1,16 @@
-F 0,0,0
-C 0,200,255
-
 NO ./maps/textures/wall_1.xpm
-SO ./maps/textures/wall_2.xpm
+F 0,0,0
+
+
+
+
+C    0,200,255
+
+                SO ./maps/textures/wall_2.xpm
 WE ./maps/textures/wall_3.xpm
-EA ./maps/textures/wall_4.xpm
+EA                                 ./maps/textures/wall_4.xpm
+
+
 
 
 
