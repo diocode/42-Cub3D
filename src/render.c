@@ -12,9 +12,10 @@
 
 #include "../includes/cub3d.h"
 
-void    render(t_data *data)
+void	render(t_data *data)
 {
-    t_player	*player;
+	(void)data;
+    /*t_player	*player;
 	t_raycast	*raycast;
     
     mlx_data_init(data);
@@ -22,5 +23,5 @@ void    render(t_data *data)
 	raycast = raycast_init(data, data->map, player);
     mlx_hook(data->win, KeyRelease, KeyReleaseMask, &handle_keypress, data);
     mlx_hook(data->win, DestroyNotify, StructureNotifyMask, &ft_quit, data);
-    mlx_loop(data->mlx);
+    mlx_loop(data->mlx);*/
 }

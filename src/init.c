@@ -19,6 +19,8 @@ void	init_img(t_data *data)
 	data->img.bpp = 0;
 	data->img.endian = 0;
 	data->img.line_len = 0;
+	data->img.height = 0;
+	data->img.width = 0;
 }
 
 static void	init_map(t_map *map)
@@ -36,13 +38,16 @@ t_raycast	*raycast_init(t_data *data, t_map *map, t_player *player)
 {
 	t_raycast	*raycast;
 
+	(void)data;
+	(void)map;
+	(void)player;
 	raycast = malloc(sizeof(t_raycast));
 	if (!raycast)
 		printf("malloc error\n");
-	
+	return (NULL);
 }
 
-t_player	*player_init(t_map *map)
+t_player	*player_init(void)
 {
 	t_player	*player;
 
@@ -50,10 +55,18 @@ t_player	*player_init(t_map *map)
 	if (!player)
 	{
 		printf("Malloc error for player\n");
+		return (NULL);
 	}
-	ft_memset(player, 0, sizeof(t_player));
+	//ft_memset(player, 0, sizeof(t_player));
 	//player->angle = angle(map->layout);
+	player->map_pos.x = 0;
+	player->map_pos.y = 0;
 	player->speed = 1.0;
+	player->angle = 0;
+	player->front = 0;
+	player->back = 0;
+	player->left = 0;
+	player->right = 0;
 	return (player);
 }
 
@@ -86,11 +99,11 @@ t_data	*init_data(void)
 		return (ft_putstr_fd("Error: malloc execution.\n", 2), NULL);
 	}
 	init_img(data);
+	data->player = player_init();
 	init_map(data->map);
-	render(data);
-	mlx_put_image_to_window(data->mlx, data->win, data->img.mlx_img, \
-	0, 0);
-	
+	//render(data);
+	/*mlx_put_image_to_window(data->mlx, data->win, data->img.mlx_img, \
+	0, 0);*/
 	data->win = 0;
 	return (data);
 }

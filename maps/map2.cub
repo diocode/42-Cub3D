@@ -1,0 +1,16 @@
+
+F 0,0,0
+C 0,200,255
+NO./maps/textures/wall_1.xpm
+SO ./maps/textures/wall_2.xpm
+WE ./maps/textures/wall_3.xpm
+EA ./maps/textures/wall_4.xpm
+ 
+111111111111
+1         11
+1       0001
+1000000 0011
+10S000000001
+111111111111
+11         1
+111111111111
