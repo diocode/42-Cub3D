@@ -24,7 +24,7 @@ MLXFLAGS = -L ./libs/minilibx-linux -lm -lmlx -Ilmlx -lXext -lX11
 
 NAME = cub3D
 
-SRC = src/main.c src/init.c src/free.c src/validate.c src/parser.c src/utils.c
+SRC = src/main.c src/init.c src/free.c src/validate.c src/parser.c src/utils.c src/invalid_map.c src/render.c src/parser_utils.c
 
 OBJ = $(SRC:.c=.o)
 

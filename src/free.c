@@ -52,8 +52,11 @@ void	free_data(t_data *data)
 		mlx_destroy_window(data->mlx, data->win);
 	if (data->mlx)
 		mlx_destroy_display(data->mlx);
+	if (data->img.mlx_img)
+		mlx_destroy_image(data->mlx, data->img.mlx_img);
 	if (data->map)
 		free_map(data->map);
+	if (data->player)
+		free(data->player);
 	free(data);
 }
-

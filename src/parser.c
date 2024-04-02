@@ -14,24 +14,29 @@
 
 static void	save_identifier(t_data *data, char *line)
 {
-	if (line[0] == 'N' && line[1] == 'O')
-		data->map->no = ft_substr(line, 3, ft_strlen(line) - 4);
-	else if (line[0] == 'S' && line[1] == 'O')
-		data->map->so =ft_substr(line, 3, ft_strlen(line) - 4);
-	else if (line[0] == 'W' && line[1] == 'E')
-		data->map->we = ft_substr(line, 3, ft_strlen(line) - 4);
-	else if (line[0] == 'E' && line[1] == 'A')
-		data->map->ea = ft_substr(line, 3, ft_strlen(line) - 4);
-	else if (line[0] == 'F')
-		data->map->f = ft_substr(line, 2, ft_strlen(line) - 3);
-	else if (line[0] == 'C')
-		data->map->c = ft_substr(line, 2, ft_strlen(line) - 3);
+	int	i;
+
+	i = 0;
+	while (line[i] == ' ')
+		i++;
+	if (line[i] == 'N' && line[i + 1] == 'O')
+		data->map->no = trim_content(line + i + 2);
+	else if (line[i] == 'S' && line[i + 1] == 'O')
+		data->map->so = trim_content(line + i + 2);
+	else if (line[i] == 'W' && line[i + 1] == 'E')
+		data->map->we = trim_content(line + i + 2);
+	else if (line[i] == 'E' && line[i + 1] == 'A')
+		data->map->ea = trim_content(line + i + 2);
+	else if (line[i] == 'F')
+		data->map->f = trim_content(line + i + 1);
+	else if (line[i] == 'C')
+		data->map->c = trim_content(line + i + 1);
 }
 
 bool	parse_identifiers(t_data *data, char *file)
 {
-	char 	*line;
-	int 	fd;
+	char	*line;
+	int		fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
@@ -49,83 +54,59 @@ bool	parse_identifiers(t_data *data, char *file)
 	return (ft_putstr_fd("Error: invalid identifiers.\n", 2), false);
 }
 
-static bool	check_start_end(char *str)
-{
-	int 	i;
-
-	i = 0;
-	while (str[i] == ' ' || str[i] == '1')
-		i++;
-	if (i != 0 && (str[i] == '\0' || str[i] == '\n'))
-		return (true);
-	return (false);
-}
-
-static int	map_lines(char *file)
-{
-	char	*gnl;
-	int		lines;
-	int		fd;
-	bool	start;
-
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	start = false;
-	lines = 0;
-	gnl = get_next_line(fd);
-	while (gnl)
-	{
-		if (!start)
-		{
-			start = check_start_end(gnl);
-			lines++;
-		}
-		else
-			lines++;
-		if (start && check_start_end(gnl) && lines > 1)
-			break ;
-		free(gnl);
-		gnl = get_next_line(fd);
-	}
-	free(gnl);
-	close(fd);
-	return (lines);
-}
-
 static char	**get_map(char *file)
 {
 	int		lines;
-//	int		fd;
-//	int		i;
+	int		fd;
 	char	**map;
 
 	lines = map_lines(file);
-	printf("lines: %d\n", lines);
+	if (!lines)
+		return (NULL);
 	map = ft_calloc(lines + 1, sizeof(char *));
 	if (!map)
 		return (NULL);
-	/*fd = open(file, O_RDONLY);
+	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
-	i = -1;
-	while (++i < lines)
-	{
-		map[i] = get_next_line(fd);
-		if (!map[i] || map[i][0] == '\r')
-		{
-			free_array(map, lines);
-			close(fd);
-			return (NULL);
-		}
-	}
-	close(fd);*/
+	save_map(map, fd);
+	close(fd);
 	return (map);
 }
 
 bool	parse_map(t_data *data, char *file)
 {
 	data->map->layout = get_map(file);
+	if (!data->map->layout)
+		return (ft_putstr_fd("Error: invalid map.\n", 2), false);
+	if (invalid_map(data->map->layout))
+		return (false);
 	return (true);
-	//return (ft_putstr_fd("Error: invalid map.\n", 2), false);
+}
+
+bool	parse_player(t_data *data)
+{
+	int	i;
+	int	j;
+
+	if (!data->player)
+		return (ft_putstr_fd("Error: invalid player.\n", 2), false);
+	i = -1;
+	while (data->map->layout[++i])
+	{
+		j = -1;
+		while (data->map->layout[i][++j])
+		{
+			if (data->map->layout[i][j] == 'N' || data->map->layout[i][j] == 'S'
+				|| data->map->layout[i][j] == 'W'
+				|| data->map->layout[i][j] == 'E')
+			{
+				data->player->map_pos.x = j;
+				data->player->map_pos.y = i;
+				get_direction(data, data->map->layout[i][j]);
+				return (true);
+			}
+		}
+	}
+	return (ft_putstr_fd("Error: invalid player.\n", 2), false);
 }

@@ -24,18 +24,16 @@
 
 /*---------- MACROS ----------*/
 
-
 /*------------- Structures ---------------*/
 
 typedef struct s_pos
 {
 	double	x;
 	double	y;
-} t_pos;
+}	t_pos;
 
-typedef struct	s_raycast
+typedef struct s_raycast
 {
-	
 }	t_raycast;
 
 typedef struct s_player
@@ -43,22 +41,21 @@ typedef struct s_player
 	t_pos	map_pos;
 	double	speed;
 	double	angle;
-	int	front;
-	int	back;
-	int	left;
-	int	right;
-	int	exit;
+	int		front;
+	int		back;
+	int		left;
+	int		right;
 }	t_player;
 
 typedef struct s_map
 {
-	char 	**layout;
+	char	**layout;
 	char	*no;
 	char	*so;
 	char	*we;
 	char	*ea;
-	char 	*f;
-	char 	*c;
+	char	*f;
+	char	*c;
 }	t_map;
 
 typedef struct s_img
@@ -74,12 +71,12 @@ typedef struct s_img
 
 typedef struct s_data
 {
-	t_map	*map;
-	void	*mlx;
-	void	*win;
-	t_img	img;
+	t_map		*map;
+	t_player	*player;
+	void		*mlx;
+	void		*win;
+	t_img		img;
 }	t_data;
-
 
 /*---------- FUNCTIONS ----------*/
 
@@ -95,11 +92,23 @@ bool	valid_file(char *file, char *ext, bool msg);
 bool	valid_map(t_data *data, char *file);
 bool	validate_identifiers(t_data *data);
 
-//parser
+//parser & utils
 bool	parse_identifiers(t_data *data, char *file);
 bool	parse_map(t_data *data, char *file);
+bool	parse_player(t_data *data);
+void	get_direction(t_data *data, char c);
+char	**save_map(char **map, int fd);
+int		map_lines(char *file);
 
 //utils
+char	*trim_content(char *str);
 bool	is_digit(char *str);
+
+//map utils
+char	*copy_map_line(const char *src, int len);
+bool	invalid_map(char **map);
+
+//render
+void	render(t_data *data);
 
 #endif
