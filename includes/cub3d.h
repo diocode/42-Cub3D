@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: digoncal <digoncal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:06:46 by digoncal          #+#    #+#             */
-/*   Updated: 2024/03/22 16:06:46 by digoncal         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:29:35 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,36 @@
 # include "../libs/minilibx-linux/mlx.h"
 # include <stdbool.h>
 # include <fcntl.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
 
 /*---------- MACROS ----------*/
 
 
 /*------------- Structures ---------------*/
+
+typedef struct s_pos
+{
+	double	x;
+	double	y;
+} t_pos;
+
+typedef struct	s_raycast
+{
+	
+}	t_raycast;
+
+typedef struct s_player
+{
+	t_pos	map_pos;
+	double	speed;
+	double	angle;
+	int	front;
+	int	back;
+	int	left;
+	int	right;
+	int	exit;
+}	t_player;
 
 typedef struct s_map
 {
@@ -39,10 +64,12 @@ typedef struct s_map
 typedef struct s_img
 {
 	void	*mlx_img;
-	char	*addr;
+	int		*addr;
 	int		bpp;
 	int		line_len;
 	int		endian;
+	int		width;
+	int		height;
 }	t_img;
 
 typedef struct s_data
