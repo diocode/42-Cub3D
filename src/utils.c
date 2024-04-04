@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: digoncal <digoncal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:45:34 by digoncal          #+#    #+#             */
-/*   Updated: 2024/03/27 16:45:34 by digoncal         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:22:44 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+int	ft_quit(t_data *data)
+{
+	free_data(data);
+	exit (1);
+}
 
 /* trim: spaces and new line */
 char	*trim_content(char *str)

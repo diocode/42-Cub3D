@@ -6,7 +6,7 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:06:46 by digoncal          #+#    #+#             */
-/*   Updated: 2024/04/02 13:29:35 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/04 12:42:40 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,49 @@
 # include "libft.h"
 # include "../libs/minilibx-linux/mlx.h"
 # include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
 # include <fcntl.h>
+# include <math.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
 
 /*---------- MACROS ----------*/
 
+# define S_W 1900 //screen width
+# define S_H 1000 //screen height
+# define TILE_SIZE 30
+# define FOV 60 //field of view
+# define ROT_SPEED 0.05 //rotation speed
+# define PLAYER_SPEED 2
+
 /*------------- Structures ---------------*/
 
 typedef struct s_pos
 {
-	double	x;
-	double	y;
+	int	x;
+	int	y;
 }	t_pos;
-
-typedef struct s_raycast
-{
-}	t_raycast;
 
 typedef struct s_player
 {
-	t_pos	map_pos;
-	double	speed;
+	t_pos	pos;
 	double	angle;
-	int		front;
-	int		back;
+	float	fov;
+	int		rot;
 	int		left;
 	int		right;
+	int		front;
+	int		back;
+	t_pos	next_pos;
 }	t_player;
+
+typedef struct s_raycast
+{
+	double	ray_angle;
+	double	distance; //distance to the wall
+	int		wall; //flag for wall
+}		t_raycast;
 
 typedef struct s_map
 {
@@ -65,12 +80,11 @@ typedef struct s_img
 	int		bpp;
 	int		line_len;
 	int		endian;
-	int		width;
-	int		height;
 }	t_img;
 
 typedef struct s_data
 {
+	t_raycast	*ray;
 	t_map		*map;
 	t_player	*player;
 	void		*mlx;
@@ -82,6 +96,8 @@ typedef struct s_data
 
 //init
 t_data	*init_data(void);
+void	init_img(t_data *data);
+void	mlx_data_init(t_data *data);
 
 //free
 void	free_data(t_data *data);
@@ -110,5 +126,8 @@ bool	invalid_map(char **map);
 
 //render
 void	render(t_data *data);
+int		handle_keys(int keysym);
+int		ft_quit(t_data *data);
 
+void    set_player(t_player *player);
 #endif
