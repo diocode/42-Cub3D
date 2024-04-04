@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: digoncal <digoncal@student.42porto.com>    +#+  +:+       +#+         #
+#    By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 15:23:58 by digoncal          #+#    #+#              #
-#    Updated: 2023/06/14 18:05:18 by digoncal         ###   ########.fr        #
+#    Updated: 2024/04/04 12:03:25 by gabrrodr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,17 @@ MLXFLAGS = -L ./libs/minilibx-linux -lm -lmlx -Ilmlx -lXext -lX11
 
 NAME = cub3D
 
-SRC = src/main.c src/init.c src/free.c src/validate.c src/parser.c src/utils.c src/invalid_map.c src/render.c src/parser_utils.c
+SRC =	src/main.c \
+		src/init.c \
+		src/free.c \
+		src/validate.c \
+		src/parser.c \
+		src/utils.c \
+		src/invalid_map.c \
+		src/render.c \
+		src/parser_utils.c \
+		src/movement.c \
+		src/player.c \
 
 OBJ = $(SRC:.c=.o)
 

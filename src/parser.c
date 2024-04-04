@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: digoncal <digoncal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:50:00 by digoncal          #+#    #+#             */
-/*   Updated: 2024/03/27 17:16:46 by digoncal         ###   ########.fr       */
+/*   Updated: 2024/04/04 12:00:18 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ bool	parse_player(t_data *data)
 				|| data->map->layout[i][j] == 'W'
 				|| data->map->layout[i][j] == 'E')
 			{
-				data->player->map_pos.x = j;
-				data->player->map_pos.y = i;
+				data->player->pos.x = j;
+				data->player->pos.y = i;
 				get_direction(data, data->map->layout[i][j]);
 				return (true);
 			}
