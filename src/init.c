@@ -6,7 +6,7 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 13:56:38 by digoncal          #+#    #+#             */
-/*   Updated: 2024/04/04 12:32:23 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:12:14 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ t_player	*player_init(void)
 	player->back = 0;
 	player->left = 0;
 	player->right = 0;
-	player->next_pos.x = 0;
-	player->next_pos.y = 0;
+	//player->next_pos.x = 0;
+	//player->next_pos.y = 0;
 	return (player);
 }
 

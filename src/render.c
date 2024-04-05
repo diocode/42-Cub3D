@@ -6,7 +6,7 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:24:58 by gabrrodr          #+#    #+#             */
-/*   Updated: 2024/04/04 17:45:23 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:58:24 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int check_intersection(float angle, float *inter, float *tile, int horizontal)
     return (1);
 }
 
+//check if the "coordinate" is a wall
 int hit_wall(float x, float y, t_data *data)
 {
     int x_map;
@@ -115,6 +116,7 @@ float   get_horizontal(t_data *data, float angle)
     return (sqrt(pow(h_x - data->player->pos.x, 2) + pow(h_y - data->player->pos.y, 2)));
 }
 
+//
 void    cast_rays(t_data *data)
 {
     double  hor_inter;//horizontal intersection
