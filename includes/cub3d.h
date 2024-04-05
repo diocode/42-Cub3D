@@ -6,7 +6,7 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:06:46 by digoncal          #+#    #+#             */
-/*   Updated: 2024/04/04 12:42:40 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:07:39 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,15 @@
 # define FOV 60 //field of view
 # define ROT_SPEED 0.05 //rotation speed
 # define PLAYER_SPEED 2
+# define S_ROTATION 5
 
 /*------------- Structures ---------------*/
+
+typedef enum e_rotation
+{
+	RIGHT,
+	LEFT,
+}	t_rotation;
 
 typedef struct s_pos
 {
@@ -52,7 +59,7 @@ typedef struct s_player
 	int		right;
 	int		front;
 	int		back;
-	t_pos	next_pos;
+	//t_pos	next_pos;
 }	t_player;
 
 typedef struct s_raycast
@@ -65,6 +72,8 @@ typedef struct s_raycast
 typedef struct s_map
 {
 	char	**layout;
+	int		map_width;
+	int		map_height;
 	char	*no;
 	char	*so;
 	char	*we;
@@ -126,7 +135,7 @@ bool	invalid_map(char **map);
 
 //render
 void	render(t_data *data);
-int		handle_keys(int keysym);
+int		handle_keys(int keysym, t_data *data);
 int		ft_quit(t_data *data);
 
 void    set_player(t_player *player);
