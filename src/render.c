@@ -132,8 +132,8 @@ void    cast_rays(t_data *data)
     while (ray < S_W)
     {
         data->ray->wall = 0;
-        hor_inter = get_horizontal(data, fix_angle(data->ray->ray_angle));
-        ver_inter = get_vertical(data, fix_angle(data->ray->ray_angle));
+        hor_inter = get_horizontal(data, (float)fix_angle(data->ray->ray_angle));
+        ver_inter = get_vertical(data, (float)fix_angle(data->ray->ray_angle));
         if (ver_inter <= hor_inter) //check distance
             data->ray->distance = ver_inter;
         else
@@ -141,7 +141,8 @@ void    cast_rays(t_data *data)
             data->ray->distance = hor_inter;
             data->ray->wall = 1;
         }
-        render_wall(data, ray);
+		update_tex_pixels(data, ray);
+        //render_wall(data, ray);
         ray++;
         data->ray->ray_angle += (data->player->fov / S_W);
     }
@@ -149,10 +150,13 @@ void    cast_rays(t_data *data)
 
 int print_frame(t_data *data)
 {
-    mlx_destroy_image(data->mlx, data->img.mlx_img);
+    //mlx_destroy_image(data->mlx, data->img.mlx_img);
     data->img.mlx_img = mlx_new_image(data->mlx, S_W, S_H);
     //hook_player(data->player);
-    cast_rays(data);
+	if (!init_tex_pixels(data))
+		return (1);
+	cast_rays(data);
+	render_frame(data);
     mlx_put_image_to_window(data->mlx, data->win, data->img.mlx_img, \
 	0, 0);
     return (0);   
@@ -161,7 +165,7 @@ int print_frame(t_data *data)
 void	render(t_data *data)
 {
     mlx_data_init(data);
-	if (!handle_textures(data) || !init_tex_pixels(data))
+	if (!handle_textures(data))
 		return ;
     set_player(data->player);
     mlx_hook(data->win, KeyRelease, KeyReleaseMask, &handle_keys, data);

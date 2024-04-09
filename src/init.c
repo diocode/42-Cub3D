@@ -12,13 +12,24 @@
 
 #include "../includes/cub3d.h"
 
-void	init_img(t_data *data)
+bool	init_mlx_img(t_data *data, t_img *image, int width, int height)
 {
-	data->img.mlx_img = NULL;
-	data->img.addr = NULL;
-	data->img.bpp = 0;
-	data->img.endian = 0;
-	data->img.line_len = 0;
+	init_img(image);
+	image->mlx_img = mlx_new_image(data->mlx, width, height);
+	if (image->mlx_img == NULL)
+		return (ft_putstr_fd("Error: invalid mlx_img init.\n", 2), false);
+	image->addr = (int *)mlx_get_data_addr(image->mlx_img, &image->bpp,
+		&image->line_len, &image->endian);
+	return (true);
+}
+
+void	init_img(t_img *img)
+{
+	img->mlx_img = NULL;
+	img->addr = NULL;
+	img->bpp = 0;
+	img->endian = 0;
+	img->line_len = 0;
 }
 
 static void	init_map(t_map *map)
@@ -49,6 +60,13 @@ t_raycast	*raycast_init()
 	raycast->horiz_y = 0;
 	raycast->vert_x = 0;
 	raycast->vert_y = 0;
+	raycast->wall_x = 0;
+	raycast->wall_y = 0;
+	raycast->dir_x = 0;
+	raycast->dir_y = 0;
+	raycast->line_height = 0;
+	raycast->draw_start = 0;
+	raycast->draw_end = 0;
 	return (raycast);
 }
 
@@ -124,7 +142,7 @@ t_data	*init_data(void)
 		free_data(data);
 		return (ft_putstr_fd("Error: malloc execution.\n", 2), NULL);
 	}
-	init_img(data);
+	init_img(&data->img);
 	init_map(data->map);
 	init_textures(data);
 	data->player = player_init();
