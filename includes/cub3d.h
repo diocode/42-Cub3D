@@ -34,8 +34,17 @@
 # define ROT_SPEED 0.05 //rotation speed
 # define PLAYER_SPEED 2
 # define S_ROTATION 5
+# define TEXTURE_SIZE 64
 
 /*------------- Structures ---------------*/
+
+enum e_texture
+{
+	NORTH = 0,
+	SOUTH = 1,
+	EAST = 2,
+	WEST = 3
+};
 
 typedef enum e_rotation
 {
@@ -67,7 +76,26 @@ typedef struct s_raycast
 	double	ray_angle;
 	double	distance; //distance to the wall
 	int		wall; //flag for wall
+	int		index;
+	double	horiz_x;
+	double	horiz_y;
+	double	vert_x;
+	double	vert_y;
 }		t_raycast;
+
+typedef struct s_textures
+{
+	int		**texture_pixels;
+	int		**textures;
+	int		cc_floor;
+	int		cc_ceiling;
+	int		size;
+	int		index;
+	double	step;
+	double	pos;
+	int		x;
+	int		y;
+}	t_textures;
 
 typedef struct s_map
 {
@@ -95,6 +123,7 @@ typedef struct s_data
 {
 	t_raycast	*ray;
 	t_map		*map;
+	t_textures	*tex;
 	t_player	*player;
 	void		*mlx;
 	void		*win;
@@ -104,39 +133,50 @@ typedef struct s_data
 /*---------- FUNCTIONS ----------*/
 
 //init
-t_data	*init_data(void);
-void	init_img(t_data *data);
-void	mlx_data_init(t_data *data);
+t_data			*init_data(void);
+void			init_img(t_data *data);
+void			mlx_data_init(t_data *data);
 
 //free
-void	free_data(t_data *data);
-void	free_array(char **arr);
+void			free_data(t_data *data);
+void			free_array(char **arr);
+void			free_int_array(int **arr);
 
 //validate
-bool	valid_file(char *file, char *ext, bool msg);
-bool	valid_map(t_data *data, char *file);
-bool	validate_identifiers(t_data *data);
+bool			valid_file(char *file, char *ext, bool msg);
+bool			valid_map(t_data *data, char *file);
+bool			validate_identifiers(t_data *data);
 
 //parser & utils
-bool	parse_identifiers(t_data *data, char *file);
-bool	parse_map(t_data *data, char *file);
-bool	parse_player(t_data *data);
-void	get_direction(t_data *data, char c);
-char	**save_map(char **map, int fd);
-int		map_lines(char *file);
+bool			parse_identifiers(t_data *data, char *file);
+bool			parse_map(t_data *data, char *file);
+bool			parse_player(t_data *data);
+void			get_direction(t_data *data, char c);
+char			**save_map(char **map, int fd);
+int				map_lines(char *file);
 
 //utils
-char	*trim_content(char *str);
-bool	is_digit(char *str);
+char			*trim_content(char *str);
+bool			is_digit(char *str);
+int				rgb_to_int(char *rgb);
 
 //map utils
-char	*copy_map_line(const char *src, int len);
-bool	invalid_map(char **map);
+char			*copy_map_line(const char *src, int len);
+bool			invalid_map(char **map);
 
 //render
-void	render(t_data *data);
-int		handle_keys(int keysym, t_data *data);
-int		ft_quit(t_data *data);
+void			render(t_data *data);
+int     		handle_keys(int keysym, t_data *data);
+int    			ft_quit(t_data *data);
 
-void    set_player(t_player *player);
+//render_wall
+double			fix_angle(double angle);
+void			render_wall(t_data *data, int ray);
+
+//textures
+bool			handle_textures(t_data *data);
+bool			init_tex_pixels(t_data *data);
+
+void    		set_player(t_player *player);
+
 #endif

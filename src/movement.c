@@ -14,16 +14,20 @@
 
 void    rotate_cam(t_rotation direction, t_player *player)
 {
-    if (direction == RIGHT)
+	(void)direction;
+	(void)player;
+    /*if (direction == RIGHT)
     {
         player->angle += ROT_SPEED;
-        if (player->angle > 2 * M_PI);
-    }
+        if (player->angle > 2 * M_PI)
+    }*/
 }
 
 int    handle_keys(int keysym, t_data *data)
 {
-    t_player    *p;
+	(void)data;
+	(void)keysym;
+    /*t_player    *p;
     
     p = data->player;
     if (keysym == XK_Up || keysym == XK_W)
@@ -39,6 +43,6 @@ int    handle_keys(int keysym, t_data *data)
     else if (keysym == XK_Left)
         rotate_cam(LEFT, p);
     else if (keysym == XK_Escape)
-        ft_quit(data);
+        ft_quit(data);*/
     return (0);
 }

@@ -24,6 +24,8 @@ void	init_img(t_data *data)
 static void	init_map(t_map *map)
 {
 	map->layout = NULL;
+        map->map_height = 0;
+        map->map_width = 0;
 	map->no = NULL;
 	map->so = NULL;
 	map->we = NULL;
@@ -42,7 +44,32 @@ t_raycast	*raycast_init()
 	raycast->ray_angle = 0;
 	raycast->distance = 0;
 	raycast->wall = 0;
+	raycast->index = 0;
+	raycast->horiz_x = 0;
+	raycast->horiz_y = 0;
+	raycast->vert_x = 0;
+	raycast->vert_y = 0;
 	return (raycast);
+}
+
+void	init_textures(t_data *data)
+{
+	data->tex = malloc(sizeof(t_textures));
+	if (!data->tex)
+	{
+		data->tex = NULL;
+		return;
+	}
+	data->tex->texture_pixels = NULL;
+	data->tex->textures = NULL;
+	data->tex->cc_floor = 0;
+	data->tex->cc_ceiling = 0;
+	data->tex->size = TEXTURE_SIZE;
+	data->tex->index = 0;
+	data->tex->step = 0;
+	data->tex->pos = 0;
+	data->tex->x = 0;
+	data->tex->y = 0;
 }
 
 t_player	*player_init(void)
@@ -99,8 +126,10 @@ t_data	*init_data(void)
 	}
 	init_img(data);
 	init_map(data->map);
+	init_textures(data);
 	data->player = player_init();
 	data->ray = raycast_init();
+	data->mlx = NULL;
 	data->win = NULL;
 	return (data);
 }

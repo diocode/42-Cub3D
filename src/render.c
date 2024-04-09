@@ -89,6 +89,8 @@ float   get_vertical(t_data *data, float angle)
         v_x += x_tile;
         v_y += y_tile;
     }
+	data->ray->vert_x = v_x;
+	data->ray->vert_y = v_y;
     return (sqrt(pow(v_x - data->player->pos.x, 2) + pow(v_y - data->player->pos.y, 2)));
 }
 
@@ -113,6 +115,8 @@ float   get_horizontal(t_data *data, float angle)
         h_x += x_tile;
         h_y += y_tile;
     }
+	data->ray->horiz_x = h_x;
+	data->ray->horiz_y = h_y;
     return (sqrt(pow(h_x - data->player->pos.x, 2) + pow(h_y - data->player->pos.y, 2)));
 }
 
@@ -155,8 +159,10 @@ int print_frame(t_data *data)
 }
 
 void	render(t_data *data)
-{   
+{
     mlx_data_init(data);
+	if (!handle_textures(data) || !init_tex_pixels(data))
+		return ;
     set_player(data->player);
     mlx_hook(data->win, KeyRelease, KeyReleaseMask, &handle_keys, data);
     mlx_hook(data->win, DestroyNotify, StructureNotifyMask, &ft_quit, data);
