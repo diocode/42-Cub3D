@@ -12,6 +12,19 @@
 
 #include "../includes/cub3d.h"
 
+int	rgb_to_int(char *str)
+{
+	int		res;
+	char 	**rgb;
+
+	rgb = ft_split(str, ',');
+	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2])
+		return (free_array(rgb), 0);
+	res = ft_atoi(rgb[0]) << 16 | ft_atoi(rgb[1]) << 8 | ft_atoi(rgb[2]);
+	free_array(rgb);
+	return (res);
+}
+
 int	ft_quit(t_data *data)
 {
 	free_data(data);

@@ -16,15 +16,17 @@ static	void	dev_mod(t_data *data)
 {
 	int i = 0;
 	printf("\nNO-> \"%s\"\nSO-> \"%s\"\nWE-> \"%s\"\nEA-> \"%s\"\nF-> \"%s\"\nC-> \"%s\"\n\n", data->map->no, data->map->so, data->map->we, data->map->ea, data->map->f, data->map->c);
+	printf("Map weight: %d\nMap height: %d\n\n", data->map->map_width, data->map->map_height);
 	printf("Player: x-> %.2d | y-> %.2d | direction-> ", data->player->pos.x, data->player->pos.y);
-	/*if (data->player->front)
+	if (data->player->front)
 		printf("Front(N)\n\n");
 	else if (data->player->back)
 		printf("Back(S)\n\n");
 	else if (data->player->left)
 		printf("Left(W)\n\n");
 	else if (data->player->right)
-		printf("Right(E)\n\n");*/
+		printf("Right(E)\n\n");
+	printf("Ceiling color: %d\nFloor color: %d\n\n", data->tex->cc_ceiling, data->tex->cc_floor);
 	while (data->map->layout[i] != NULL) {
 		printf("%s", data->map->layout[i]);
 		printf("\n");

@@ -76,11 +76,24 @@ static char	**get_map(char *file)
 
 bool	parse_map(t_data *data, char *file)
 {
+	int	height;
+	int	width;
+
 	data->map->layout = get_map(file);
 	if (!data->map->layout)
 		return (ft_putstr_fd("Error: invalid map.\n", 2), false);
 	if (invalid_map(data->map->layout))
 		return (false);
+	height = 0;
+	width = 0;
+	while (data->map->layout[height])
+	{
+		while (height == 0 && data->map->layout[height][width])
+			width++;
+		height++;
+	}
+	data->map->map_height = height;
+	data->map->map_width = width;
 	return (true);
 }
 
