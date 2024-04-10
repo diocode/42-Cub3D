@@ -77,10 +77,17 @@ typedef struct s_raycast
 	double	distance; //distance to the wall
 	int		wall; //flag for wall
 	int		index;
+	double 	line_height;
+	int 	draw_start;
+	int 	draw_end;
 	double	horiz_x;
 	double	horiz_y;
 	double	vert_x;
 	double	vert_y;
+	double  wall_x;
+	double  wall_y;
+	double 	dir_x;
+	double  dir_y;
 }		t_raycast;
 
 typedef struct s_textures
@@ -134,8 +141,9 @@ typedef struct s_data
 
 //init
 t_data			*init_data(void);
-void			init_img(t_data *data);
+void			init_img(t_img *img);
 void			mlx_data_init(t_data *data);
+bool			init_mlx_img(t_data *data, t_img *image, int width, int height);
 
 //free
 void			free_data(t_data *data);
@@ -171,11 +179,12 @@ int    			ft_quit(t_data *data);
 
 //render_wall
 double			fix_angle(double angle);
-void			render_wall(t_data *data, int ray);
+void			render_frame(t_data *data);
 
 //textures
 bool			handle_textures(t_data *data);
 bool			init_tex_pixels(t_data *data);
+void			update_tex_pixels(t_data *data, int x);
 
 void    		set_player(t_player *player);
 

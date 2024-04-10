@@ -47,7 +47,7 @@ int	main(int ac, char **av)
 	data = init_data();
 	if (!data || !valid_map(data, av[1]))
 		return (free_data(data), 1);
-	init_img(data);
+	init_img(&data->img);
 	dev_mod(data); //DEV MOD
 	data->win = 0;
 	render(data);
