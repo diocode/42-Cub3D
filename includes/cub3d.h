@@ -61,14 +61,12 @@ typedef struct s_pos
 typedef struct s_player
 {
 	t_pos	pos;
+	double	dir_x;
+	double	dir_y;
 	double	angle;
 	float	fov;
-	int		rot;
-	int		left;
-	int		right;
-	int		front;
-	int		back;
-	//t_pos	next_pos;
+	t_pos 	move;
+	int 	rotate;
 }	t_player;
 
 typedef struct s_raycast
@@ -177,7 +175,7 @@ void			render(t_data *data);
 int     		handle_keys(int keysym, t_data *data);
 int    			ft_quit(t_data *data);
 
-//render_wall
+//render_frame
 double			fix_angle(double angle);
 void			render_frame(t_data *data);
 
@@ -185,6 +183,11 @@ void			render_frame(t_data *data);
 bool			handle_textures(t_data *data);
 bool			init_tex_pixels(t_data *data);
 void			update_tex_pixels(t_data *data, int x);
+
+//movement
+int				keyrelease_handle(int keysym, t_data *data);
+int				keypress_handle(int keysym, t_data *data);
+bool			move_player(t_data *data);
 
 void    		set_player(t_player *player);
 

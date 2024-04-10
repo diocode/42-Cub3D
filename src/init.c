@@ -102,15 +102,13 @@ t_player	*player_init(void)
 	}
 	player->pos.x = 0;
 	player->pos.y = 0;
-	player->angle = 0;
-	player->fov = 0;
-	player->rot = 0;
-	player->front = 0;
-	player->back = 0;
-	player->left = 0;
-	player->right = 0;
-	//player->next_pos.x = 0;
-	//player->next_pos.y = 0;
+	player->fov = (float)(FOV * M_PI) / 180;
+	player->angle = M_PI;
+	player->dir_x = 0;
+	player->dir_y = 0;
+	player->move.x = 0;
+	player->move.y = 0;
+	player->rotate = 0;
 	return (player);
 }
 

@@ -15,13 +15,25 @@
 void	get_direction(t_data *data, char c)
 {
 	if (c == 'N')
-		data->player->front = 1;
+	{
+		data->player->dir_x = 0;
+		data->player->dir_y = -1;
+	}
 	else if (c == 'S')
-		data->player->back = 1;
+	{
+		data->player->dir_x = 0;
+		data->player->dir_y = 1;
+	}
 	else if (c == 'W')
-		data->player->left = 1;
+	{
+		data->player->dir_x = -1;
+		data->player->dir_y = 0;
+	}
 	else if (c == 'E')
-		data->player->right = 1;
+	{
+		data->player->dir_x = 1;
+		data->player->dir_y = 0;
+	};
 }
 
 static bool	check_start(const char *str)

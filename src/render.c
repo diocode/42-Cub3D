@@ -165,10 +165,11 @@ int print_frame(t_data *data)
 void	render(t_data *data)
 {
     mlx_data_init(data);
-	if (!handle_textures(data))
+	if (!move_player(data))
 		return ;
-    set_player(data->player);
-    mlx_hook(data->win, KeyRelease, KeyReleaseMask, &handle_keys, data);
+    //set_player(data->player);
+	mlx_hook(data->win, KeyPress, KeyPressMask, &keypress_handle, data);
+	mlx_hook(data->win, KeyRelease, KeyReleaseMask, &keyrelease_handle, data);
     mlx_hook(data->win, DestroyNotify, StructureNotifyMask, &ft_quit, data);
     mlx_loop_hook(data->mlx, print_frame, NULL);
     mlx_loop(data->mlx);

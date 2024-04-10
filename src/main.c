@@ -45,11 +45,12 @@ int	main(int ac, char **av)
 	if (!valid_file(av[1], ".cub", true))
 		return (1);
 	data = init_data();
-	if (!data || !valid_map(data, av[1]))
+	if (!data || !valid_map(data, av[1]) || !handle_textures(data))
 		return (free_data(data), 1);
 	init_img(&data->img);
 	dev_mod(data); //DEV MOD
 	data->win = 0;
+	/*render the frame one time before loop*/
 	render(data);
 	free_data(data);
 }
