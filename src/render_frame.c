@@ -46,7 +46,7 @@ void	render_frame(t_data *data)
 	int		y;
 
 	image.mlx_img = NULL;
-	if(!init_mlx_img(data, &image, S_W, S_H))
+	if (!init_mlx_img(data, &image, S_W, S_H))
 		return ;
 	y = 0;
 	while (y < S_H)

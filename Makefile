@@ -34,7 +34,6 @@ SRC =	src/main.c \
 		src/render.c \
 		src/parser_utils.c \
 		src/movement.c \
-		src/player.c \
 		src/render_frame.c \
 		src/textures.c \
 

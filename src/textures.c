@@ -82,14 +82,15 @@ bool	init_tex_pixels(t_data *data)
 
 	if (data->tex->texture_pixels)
 		free_int_array(data->tex->texture_pixels);
-	data->tex->texture_pixels = ft_calloc(S_H + 1, sizeof(data->tex->texture_pixels));
+	data->tex->texture_pixels = ft_calloc(S_H + 1, \
+		sizeof(data->tex->texture_pixels));
 	if (!data->tex->texture_pixels)
 		return (ft_putstr_fd("Error: invalid malloc.\n", 2), false);
 	i = 0;
 	while (i < S_H)
 	{
 		data->tex->texture_pixels[i] = ft_calloc(S_W + 1,
-			sizeof * data->tex->texture_pixels);
+				sizeof * data->tex->texture_pixels);
 		if (!data->tex->texture_pixels[i])
 			return (ft_putstr_fd("Error: invalid malloc.\n", 2), false);
 		i++;
@@ -129,13 +130,14 @@ void	update_tex_pixels(t_data *data, int x)
 		data->tex->x = data->tex->size - data->tex->x - 1;
 	data->tex->step = 1.0 * data->tex->size / data->ray->line_height;
 	data->tex->pos = (data->ray->draw_start - S_W / 2
-				+ data->ray->line_height / 2) * data->tex->step;
+			+ data->ray->line_height / 2) * data->tex->step;
 	y = data->ray->draw_start;
 	while (y < data->ray->draw_end)
 	{
 		data->tex->y = (int)data->tex->pos & (data->tex->size - 1);
 		data->tex->pos += data->tex->step;
-		color = data->tex->textures[data->tex->index][data->tex->size * data->tex->y + data->tex->x];
+		color = data->tex->textures[data->tex->index] \
+			[data->tex->size * data->tex->y + data->tex->x];
 		if (data->tex->index == NORTH || data->tex->index == EAST)
 			color = (color >> 1) & 8355711;
 		if (color > 0)
