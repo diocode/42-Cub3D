@@ -6,7 +6,7 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 12:42:28 by gabrrodr          #+#    #+#             */
-/*   Updated: 2024/04/11 12:47:06 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/11 13:51:03 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,4 +15,9 @@
 /*
 - initialize everything in the ray structure to 0
 - position of the camera (left, center, right)??
-- */
+- 
+
+
+
+
+*/

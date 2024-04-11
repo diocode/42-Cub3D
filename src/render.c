@@ -6,167 +6,131 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:24:58 by gabrrodr          #+#    #+#             */
-/*   Updated: 2024/04/10 16:15:51 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/11 17:06:28 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int unit_circle(float angle, char c) // check the unit circle
+void    set_dda(t_raycast *ray, t_data *data)
 {
-    if (c == 'x')
+    if (ray->dir_x < 0)
     {
-        if (angle > 0 && angle < M_PI)
-            return (1);
-    }
-    else if (c == 'y')
-    {
-        if (angle > (M_PI / 2) && angle < (3 * M_PI) / 2)
-            return (1);
-    }
-    return (0);
-}
-
-int check_intersection(float angle, float *inter, float *tile, int horizontal)
-{
-    if (horizontal)
-    {
-        if (angle > 0 && angle < M_PI)
-        {
-            *inter += TILE_SIZE;
-            return (-1);
-        }
-        *tile *= -1;
+        ray->step_x = -1;
+        ray->horiz_x = (data->player->pos.x - ray->map_x) * ray->vert_x;
     }
     else
     {
-        if (!(angle > M_PI / 2 && angle < 3 * M_PI / 2))
+        ray->step_x = 1;
+        ray->horiz_x = (data->player->pos.x + 1.0 - ray->map_x) * ray->vert_x;
+    }
+    if (ray->dir_y < 0)
+    {
+        ray->step_y = -1;
+        ray->horiz_y = (data->player->pos.y - ray->map_y) * ray->vert_y;
+    }
+    else
+    {
+        ray->step_y = 1;
+        ray->horiz_y = (data->player->pos.y + 1.0 - ray->map_y) * ray->vert_y;
+    }
+}
+
+void    do_dda(t_data * data, t_raycast *ray)
+{
+    int wall;
+
+    wall = 0;
+    while (wall == 0)
+    {
+        if (ray->horiz_x < ray->horiz_y)
         {
-            *inter += TILE_SIZE;
-            return (-1);
+            ray->horiz_x += ray->vert_x;
+            ray->map_x += ray->step_x;
+            ray->side = 0;
         }
-        *tile *= -1;
-    }
-    return (1);
-}
-
-//check if the "coordinate" is a wall
-int hit_wall(float x, float y, t_data *data)
-{
-    int x_map;
-    int y_map;
-
-    if ( x < 0 || y < 0)
-        return (0);
-    x_map = floor(x / TILE_SIZE);
-    y_map = floor(y / TILE_SIZE);
-    if ((y_map >= data->map->map_height) || x_map >= data->map->map_width)
-        return (0);
-    if (data->map->layout[y_map] && x_map <= (int)ft_strlen(data->map->layout[y_map]))
-        if (data->map->layout[y_map][x_map] == '1')
-            return (0);
-    return (1);
-}
-
-float   get_vertical(t_data *data, float angle)
-{
-    float   v_x;
-    float   v_y;
-    int     pixel;
-    float   x_tile;
-    float   y_tile;
-
-    x_tile = TILE_SIZE;
-    y_tile = TILE_SIZE / tan(angle);
-    v_x = floor(data->player->pos.x / TILE_SIZE) * TILE_SIZE;
-    pixel = check_intersection(angle, &v_x, &x_tile, 0);
-    v_y = data->player->pos.y + (v_x - data->player->pos.x) / tan(angle);
-    if ((unit_circle(angle, 'x') && x_tile > 0)
-        || (!unit_circle(angle, 'x') && x_tile < 0))
-        x_tile *= -1;
-    while (hit_wall(v_x - pixel, v_y, data))
-    {
-        v_x += x_tile;
-        v_y += y_tile;
-    }
-	data->ray->vert_x = v_x;
-	data->ray->vert_y = v_y;
-    return (sqrt(pow(v_x - data->player->pos.x, 2) + pow(v_y - data->player->pos.y, 2)));
-}
-
-float   get_horizontal(t_data *data, float angle)
-{
-    float   h_x;
-    float   h_y;
-    int     pixel;
-    float   x_tile;
-    float   y_tile;
-
-    y_tile = TILE_SIZE;
-    x_tile = TILE_SIZE / tan(angle);
-    h_y = floor(data->player->pos.y / TILE_SIZE) * TILE_SIZE;
-    pixel = check_intersection(angle, &h_y, &y_tile, 1);
-    h_x = data->player->pos.x + (h_y - data->player->pos.y) / tan(angle);
-    if ((unit_circle(angle, 'y') && x_tile > 0)
-        || (!unit_circle(angle, 'y') && x_tile < 0))
-        x_tile *= -1;
-    while (hit_wall(h_x, h_y - pixel, data))
-    {
-        h_x += x_tile;
-        h_y += y_tile;
-    }
-	data->ray->horiz_x = h_x;
-	data->ray->horiz_y = h_y;
-    return (sqrt(pow(h_x - data->player->pos.x, 2) + pow(h_y - data->player->pos.y, 2)));
-}
-
-//
-void    cast_rays(t_data *data)
-{
-    double  hor_inter;//horizontal intersection
-    double  ver_inter;//vertical intersection
-    int ray;
-
-    ray = 0;
-    data->ray->ray_angle = data->player->angle - (data->player->fov / 2); //start angle
-    while (ray < S_W)
-    {
-        data->ray->wall = 0;
-        hor_inter = get_horizontal(data, (float)fix_angle(data->ray->ray_angle));
-        ver_inter = get_vertical(data, (float)fix_angle(data->ray->ray_angle));
-        if (ver_inter <= hor_inter) //check distance
-            data->ray->distance = ver_inter;
         else
         {
-            data->ray->distance = hor_inter;
-            data->ray->wall = 1;
+            ray->horiz_y += ray->vert_y;
+            ray->map_y += ray->step_y;
+            ray->side = 1;
         }
-		update_tex_pixels(data, ray);
-        //render_wall(data, ray);
-        ray++;
-        data->ray->ray_angle += (data->player->fov / S_W);
+        if (ray->map_y < 0.25 || ray->map_x < 0.25
+            || ray->map_y > data->map->map_height - 0.25
+            || ray->map_x > data->map->map_width - 1.25)
+            break;
+        else if (data->map->layout[ray->map_y][ray->map_x] > '0')
+        {
+            wall = 1;
+        }
+    }
+}
+
+void    ray_info_init(int x, t_raycast *ray, t_data *data)
+{
+    raycast_init(data->ray);
+    
+    ray->ray_angle = 2 * x / (double)WIN_WIDTH - 1;
+    ray->dir_x = data->player->dir_x + data->player->plane_x * ray->ray_angle;
+    ray->dir_y = data->player->dir_y + data->player->plane_x * ray->ray_angle;
+    ray->map_x = data->player->pos.x;
+    ray->map_y = data->player->pos.y;
+    ray->vert_x = fabs(1 / ray->dir_x);
+    ray->vert_y = fabs(1 / ray->dir_y);
+}
+
+// this calculates how the wall will be drawn
+// calculates the distance to the wall, then with that it calculates how much of the screen will 
+// the wall occupy (closer - more)
+void    calculate_line_height(t_raycast *ray, t_data *data)
+{
+    if (ray->side == 0)
+        ray->distance = (ray->horiz_x - ray->vert_x);
+    else
+        ray->distance = (ray->horiz_y - ray->vert_y);
+    ray->line_height = (int)(data->win_height / ray->distance);
+    ray->draw_start = -(ray->line_height) / 2 + data->win_height / 2;
+    if (ray->draw_start < 0)
+        ray->draw_start = 0;
+    ray->draw_end = ray->line_height / 2 + data->win_height / 2;
+    if (ray->draw_end >= data->win_height)
+        ray->draw_end = data->win_height - 1;
+    if (ray->side == 0)
+        ray->wall = data->player->pos.y + ray->distance * ray->dir_y;
+    else
+        ray->wall = data->player->pos.x + ray->distance * ray->dir_x;
+    ray->wall -= floor(ray->wall);
+}
+
+void    cast_rays(t_data *data)
+{
+    t_raycast   *ray;
+    int x;
+
+    x = 0;
+    ray = data->ray;
+    while (x < data->win_width)
+    {
+        ray_info_init(x, ray, data);
+        set_dda(ray, data);
+        do_dda(data, ray);
+        calculate_line_height(ray, data);
+		update_tex_pixels(data, x);
+        x++;
     }
 }
 
 int print_frame(t_data *data)
 {
-    //mlx_destroy_image(data->mlx, data->img.mlx_img);
-    //data->img.mlx_img = mlx_new_image(data->mlx, S_W, S_H);
-    //hook_player(data->player);
 	render_img(data);
-	//cast_rays(data);
-	//render_frame(data);
-    //mlx_put_image_to_window(data->mlx, data->win, data->img.mlx_img, \
-	//0, 0);
     return (0);   
 }
 
-void    render_ray(t_data *data)
+void	render_ray(t_data *data)
 {
-    if (!init_tex_pixels(data))
+	if (!init_tex_pixels(data))
 		return ;
-    //data->ray = raycast_init();
-    ft_memset(data->ray, 0, sizeof(t_raycast));
+    raycast_init(data->ray);
     cast_rays(data);
     render_frame(data);
 }

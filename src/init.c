@@ -6,7 +6,7 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 13:56:38 by digoncal          #+#    #+#             */
-/*   Updated: 2024/04/10 16:07:09 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/11 16:55:12 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	init_mlx_img(t_data *data, t_img *image, int width, int height)
 	if (image->mlx_img == NULL)
 		return (ft_putstr_fd("Error: invalid mlx_img init.\n", 2), false);
 	image->addr = (int *)mlx_get_data_addr(image->mlx_img, &image->bpp,
-		&image->line_len, &image->endian);
+			&image->line_len, &image->endian);
 	return (true);
 }
 
@@ -35,8 +35,8 @@ void	init_img(t_img *img)
 static void	init_map(t_map *map)
 {
 	map->layout = NULL;
-        map->map_height = 0;
-        map->map_width = 0;
+	map->map_height = 0;
+	map->map_width = 0;
 	map->no = NULL;
 	map->so = NULL;
 	map->we = NULL;
@@ -45,29 +45,25 @@ static void	init_map(t_map *map)
 	map->c = NULL;
 }
 
-t_raycast	*raycast_init()
+void	raycast_init(t_raycast *raycast)
 {
-	t_raycast	*raycast;
-	
-	raycast = (t_raycast *)malloc(sizeof(t_raycast));
-	if (!raycast)
-		return (NULL);
 	raycast->ray_angle = 0;
+	raycast->dir_x = 0;
+	raycast->dir_y = 0;
 	raycast->distance = 0;
-	raycast->wall = 0;
-	raycast->index = 0;
+	raycast->side = 0;
+	raycast->map_x = 0;
+	raycast->map_y = 0;
+	raycast->step_x = 0;
+	raycast->step_y = 0;
 	raycast->horiz_x = 0;
 	raycast->horiz_y = 0;
 	raycast->vert_x = 0;
 	raycast->vert_y = 0;
-	raycast->wall_x = 0;
-	raycast->wall_y = 0;
-	raycast->dir_x = 0;
-	raycast->dir_y = 0;
 	raycast->line_height = 0;
 	raycast->draw_start = 0;
 	raycast->draw_end = 0;
-	return (raycast);
+	raycast->wall = 0;
 }
 
 void	init_textures(t_data *data)
@@ -76,7 +72,7 @@ void	init_textures(t_data *data)
 	if (!data->tex)
 	{
 		data->tex = NULL;
-		return;
+		return ;
 	}
 	data->tex->texture_pixels = NULL;
 	data->tex->textures = NULL;
@@ -100,17 +96,17 @@ t_player	*player_init(void)
 		printf("Malloc error for player\n");
 		return (NULL);
 	}
+	player->plane_x = 0.0;
+	player->plane_y = 0.0;
 	player->pos.x = 0;
 	player->pos.y = 0;
-	player->angle = 0;
-	player->fov = 0;
-	player->rot = 0;
-	player->front = 0;
-	player->back = 0;
-	player->left = 0;
-	player->right = 0;
-	//player->next_pos.x = 0;
-	//player->next_pos.y = 0;
+	//player->fov = (float)(FOV * M_PI) / 180;
+	player->angle = M_PI;
+	player->dir_x = 0;
+	player->dir_y = 0;
+	player->move.x = 0;
+	player->move.y = 0;
+	player->rotate = 0;
 	return (player);
 }
 
@@ -119,7 +115,7 @@ void	mlx_data_init(t_data *data)
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		printf("error!\n");
-	data->win = mlx_new_window(data->mlx, 780, 780, "cube_3d");
+	data->win = mlx_new_window(data->mlx, 780, 780, "- Cub3D -");
 	if (!data->win)
 		printf("mlx_win error\n");
 	//data->img.mlx_img = mlx_new_image(data->mlx, 780, 780);
@@ -150,6 +146,5 @@ t_data	*init_data(void)
 	init_map(data->map);
 	init_img(&data->img);
 	init_textures(data);
-	data->ray = raycast_init();
 	return (data);
 }

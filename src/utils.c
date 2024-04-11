@@ -15,7 +15,7 @@
 int	rgb_to_int(char *str)
 {
 	int		res;
-	char 	**rgb;
+	char	**rgb;
 
 	rgb = ft_split(str, ',');
 	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2])
