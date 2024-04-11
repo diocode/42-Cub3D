@@ -33,7 +33,7 @@ void	get_direction(t_data *data, char c)
 	{
 		data->player->dir_x = 1;
 		data->player->dir_y = 0;
-	};
+	}
 }
 
 static bool	check_start(const char *str)

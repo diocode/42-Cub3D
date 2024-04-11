@@ -61,12 +61,13 @@ void	free_data(t_data *data)
 {
 	if (!data)
 		return ;
+	if (data->img.mlx_img)
+		mlx_destroy_image(data->mlx, data->img.mlx_img);
 	if (data->win)
 		mlx_destroy_window(data->mlx, data->win);
 	if (data->mlx)
 		mlx_destroy_display(data->mlx);
-	if (data->img.mlx_img)
-		mlx_destroy_image(data->mlx, data->img.mlx_img);
+	free(data->mlx);
 	if (data->map)
 		free_map(data->map);
 	if (data->tex)

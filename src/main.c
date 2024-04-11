@@ -18,13 +18,13 @@ static	void	dev_mod(t_data *data)
 	printf("\nNO-> \"%s\"\nSO-> \"%s\"\nWE-> \"%s\"\nEA-> \"%s\"\nF-> \"%s\"\nC-> \"%s\"\n\n", data->map->no, data->map->so, data->map->we, data->map->ea, data->map->f, data->map->c);
 	printf("Map weight: %d\nMap height: %d\n\n", data->map->map_width, data->map->map_height);
 	printf("Player: x-> %.2d | y-> %.2d | direction-> ", data->player->pos.x, data->player->pos.y);
-	if (data->player->front)
+	if (data->player->dir_x == 0 && data->player->dir_y == -1)
 		printf("Front(N)\n\n");
-	else if (data->player->back)
+	else if (data->player->dir_x == 0 && data->player->dir_y == 1)
 		printf("Back(S)\n\n");
-	else if (data->player->left)
+	else if (data->player->dir_x == -1 && data->player->dir_y == 0)
 		printf("Left(W)\n\n");
-	else if (data->player->right)
+	else if (data->player->dir_x == 1 && data->player->dir_y == 0)
 		printf("Right(E)\n\n");
 	printf("Ceiling color: %d\nFloor color: %d\n\n", data->tex->cc_ceiling, data->tex->cc_floor);
 	while (data->map->layout[i] != NULL) {
@@ -38,7 +38,6 @@ static	void	dev_mod(t_data *data)
 int	main(int ac, char **av)
 {
 	t_data		*data;
-	//t_raycast	*raycast;
 
 	if (ac != 2)
 		return (ft_putstr_fd("Error: no file provided.\n", 2), 1);
@@ -47,9 +46,7 @@ int	main(int ac, char **av)
 	data = init_data();
 	if (!data || !valid_map(data, av[1]) || !handle_textures(data))
 		return (free_data(data), 1);
-	init_img(&data->img);
 	dev_mod(data); //DEV MOD
-	data->win = 0;
 	/*render the frame one time before loop*/
 	render(data);
 	free_data(data);

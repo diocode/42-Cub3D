@@ -80,18 +80,18 @@ float   get_vertical(t_data *data, float angle)
     y_tile = TILE_SIZE / tan(angle);
     v_x = floor(data->player->pos.x / TILE_SIZE) * TILE_SIZE;
     pixel = check_intersection(angle, &v_x, &x_tile, 0);
-    v_y = data->player->pos.y + (v_x - data->player->pos.x) / tan(angle);
+    v_y = data->player->pos.y + (v_x - (float)data->player->pos.x) / tan(angle);
     if ((unit_circle(angle, 'x') && x_tile > 0)
         || (!unit_circle(angle, 'x') && x_tile < 0))
         x_tile *= -1;
-    while (hit_wall(v_x - pixel, v_y, data))
+    while (hit_wall(v_x - (float)pixel, v_y, data))
     {
         v_x += x_tile;
         v_y += y_tile;
     }
 	data->ray->vert_x = v_x;
 	data->ray->vert_y = v_y;
-    return (sqrt(pow(v_x - data->player->pos.x, 2) + pow(v_y - data->player->pos.y, 2)));
+    return ((float)sqrt(pow(v_x - (float)data->player->pos.x, 2) + pow(v_y - (float)data->player->pos.y, 2)));
 }
 
 float   get_horizontal(t_data *data, float angle)
@@ -104,20 +104,20 @@ float   get_horizontal(t_data *data, float angle)
 
     y_tile = TILE_SIZE;
     x_tile = TILE_SIZE / tan(angle);
-    h_y = floor(data->player->pos.y / TILE_SIZE) * TILE_SIZE;
+    h_y = floor((float)data->player->pos.y / TILE_SIZE) * TILE_SIZE;
     pixel = check_intersection(angle, &h_y, &y_tile, 1);
-    h_x = data->player->pos.x + (h_y - data->player->pos.y) / tan(angle);
+    h_x = data->player->pos.x + (h_y - (float)data->player->pos.y) / tan(angle);
     if ((unit_circle(angle, 'y') && x_tile > 0)
         || (!unit_circle(angle, 'y') && x_tile < 0))
         x_tile *= -1;
-    while (hit_wall(h_x, h_y - pixel, data))
+    while (hit_wall(h_x, h_y - (float)pixel, data))
     {
         h_x += x_tile;
         h_y += y_tile;
     }
 	data->ray->horiz_x = h_x;
 	data->ray->horiz_y = h_y;
-    return (sqrt(pow(h_x - data->player->pos.x, 2) + pow(h_y - data->player->pos.y, 2)));
+    return ((float)sqrt(pow(h_x - (float)data->player->pos.x, 2) + pow(h_y - (float)data->player->pos.y, 2)));
 }
 
 //
@@ -142,7 +142,6 @@ void    cast_rays(t_data *data)
             data->ray->wall = 1;
         }
 		update_tex_pixels(data, ray);
-        //render_wall(data, ray);
         ray++;
         data->ray->ray_angle += (data->player->fov / S_W);
     }
@@ -150,27 +149,21 @@ void    cast_rays(t_data *data)
 
 int print_frame(t_data *data)
 {
-    //mlx_destroy_image(data->mlx, data->img.mlx_img);
-    data->img.mlx_img = mlx_new_image(data->mlx, S_W, S_H);
-    //hook_player(data->player);
 	if (!init_tex_pixels(data))
 		return (1);
 	cast_rays(data);
 	render_frame(data);
-    mlx_put_image_to_window(data->mlx, data->win, data->img.mlx_img, \
-	0, 0);
+    mlx_put_image_to_window(data->mlx, data->win, data->img.mlx_img, 0, 0);
     return (0);   
 }
 
 void	render(t_data *data)
 {
-    mlx_data_init(data);
 	if (!move_player(data))
 		return ;
-    //set_player(data->player);
 	mlx_hook(data->win, KeyPress, KeyPressMask, &keypress_handle, data);
 	mlx_hook(data->win, KeyRelease, KeyReleaseMask, &keyrelease_handle, data);
     mlx_hook(data->win, DestroyNotify, StructureNotifyMask, &ft_quit, data);
-    mlx_loop_hook(data->mlx, print_frame, NULL);
+    mlx_loop_hook(data->mlx, print_frame, data);
     mlx_loop(data->mlx);
 }

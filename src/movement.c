@@ -12,9 +12,9 @@
 
 #include "../includes/cub3d.h"
 
-static void    rotate_cam(t_data *data, double rot_speed)
+static void	rotate_cam(t_data *data, double rot_speed)
 {
-	double tmp;
+	double	tmp;
 
 	tmp = data->player->dir_x;
 	data->player->angle += rot_speed;
@@ -59,7 +59,7 @@ bool	move_player(t_data *data)
 	return (moved);
 }
 
-int    keyrelease_handle(int keysym, t_data *data)
+int	keyrelease_handle(int keysym, t_data *data)
 {
 	if (keysym == XK_Escape)
 		ft_quit(data);
@@ -78,7 +78,7 @@ int    keyrelease_handle(int keysym, t_data *data)
 	return (0);
 }
 
-int    keypress_handle(int keysym, t_data *data)
+int	keypress_handle(int keysym, t_data *data)
 {
 	if (keysym == XK_Escape)
 		ft_quit(data);
@@ -86,13 +86,13 @@ int    keypress_handle(int keysym, t_data *data)
 		data->player->rotate = 1;
 	if (keysym == XK_Left)
 		data->player->rotate = -1;
-    if (keysym == XK_Up || keysym == XK_W)
-       data->player->move.y = 1;
-    if (keysym == XK_Down || keysym == XK_S)
+	if (keysym == XK_Up || keysym == XK_W)
+		data->player->move.y = 1;
+	if (keysym == XK_Down || keysym == XK_S)
 		data->player->move.y = -1;
-    if (keysym == XK_D)
+	if (keysym == XK_D)
 		data->player->move.x = 1;
-    if (keysym == XK_A)
+	if (keysym == XK_A)
 		data->player->move.x = -1;
-    return (0);
+	return (0);
 }
