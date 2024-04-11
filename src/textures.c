@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: digoncal <digoncal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:31:31 by digoncal          #+#    #+#             */
-/*   Updated: 2024/04/08 15:31:31 by digoncal         ###   ########.fr       */
+/*   Updated: 2024/04/11 17:06:51 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	update_tex_pixels(t_data *data, int x)
 	int			color;
 
 	get_index(data);
-	data->tex->x = (int)(data->ray->wall_x * data->tex->size);
+	data->tex->x = (int)(data->ray->wall * data->tex->size);
 	if ((!data->ray->wall && data->ray->dir_x < 0)
 		|| (data->ray->wall && data->ray->dir_y > 0))
 		data->tex->x = data->tex->size - data->tex->x - 1;

@@ -6,7 +6,7 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:22:29 by digoncal          #+#    #+#             */
-/*   Updated: 2024/04/04 11:58:49 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/11 14:46:13 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ int	main(int ac, char **av)
 	if (!data || !valid_map(data, av[1]) || !handle_textures(data))
 		return (free_data(data), 1);
 	dev_mod(data); //DEV MOD
-	/*render the frame one time before loop*/
-	render(data);
-	free_data(data);
+	mlx_data_init(data);
+	handle_textures(data);
+	render_img(data);
+	mlx_loop_hook(data->mlx, print_frame, NULL);
+    mlx_loop(data->mlx);
+	//free_data(data);
+	return (0);
 }

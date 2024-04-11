@@ -6,7 +6,7 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 13:56:38 by digoncal          #+#    #+#             */
-/*   Updated: 2024/04/05 13:24:58 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/11 16:55:12 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,25 @@ static void	init_map(t_map *map)
 	map->c = NULL;
 }
 
-t_raycast	*raycast_init(void)
+void	raycast_init(t_raycast *raycast)
 {
-	t_raycast	*raycast;
-
-	raycast = (t_raycast *)malloc(sizeof(t_raycast));
-	if (!raycast)
-		return (NULL);
 	raycast->ray_angle = 0;
+	raycast->dir_x = 0;
+	raycast->dir_y = 0;
 	raycast->distance = 0;
-	raycast->wall = 0;
-	raycast->index = 0;
+	raycast->side = 0;
+	raycast->map_x = 0;
+	raycast->map_y = 0;
+	raycast->step_x = 0;
+	raycast->step_y = 0;
 	raycast->horiz_x = 0;
 	raycast->horiz_y = 0;
 	raycast->vert_x = 0;
 	raycast->vert_y = 0;
-	raycast->wall_x = 0;
-	raycast->wall_y = 0;
-	raycast->dir_x = 0;
-	raycast->dir_y = 0;
 	raycast->line_height = 0;
 	raycast->draw_start = 0;
 	raycast->draw_end = 0;
-	return (raycast);
+	raycast->wall = 0;
 }
 
 void	init_textures(t_data *data)
@@ -100,9 +96,11 @@ t_player	*player_init(void)
 		printf("Malloc error for player\n");
 		return (NULL);
 	}
+	player->plane_x = 0.0;
+	player->plane_y = 0.0;
 	player->pos.x = 0;
 	player->pos.y = 0;
-	player->fov = (float)(FOV * M_PI) / 180;
+	//player->fov = (float)(FOV * M_PI) / 180;
 	player->angle = M_PI;
 	player->dir_x = 0;
 	player->dir_y = 0;
@@ -120,11 +118,11 @@ void	mlx_data_init(t_data *data)
 	data->win = mlx_new_window(data->mlx, 780, 780, "- Cub3D -");
 	if (!data->win)
 		printf("mlx_win error\n");
-	data->img.mlx_img = mlx_new_image(data->mlx, 780, 780);
-	if (!data->img.mlx_img)
-		printf("mlx_img error!\n");
-	data->img.addr = (int *)mlx_get_data_addr(data->img.mlx_img, \
-	&data->img.bpp, &data->img.line_len, &data->img.endian);
+	//data->img.mlx_img = mlx_new_image(data->mlx, 780, 780);
+	//if (!data->img.mlx_img)
+	//	printf("mlx_img error!\n");
+	//data->img.addr = (int *)mlx_get_data_addr(data->img.mlx_img, \
+	//&data->img.bpp, &data->img.line_len, &data->img.endian);
 }
 
 t_data	*init_data(void)
@@ -140,11 +138,13 @@ t_data	*init_data(void)
 		free_data(data);
 		return (ft_putstr_fd("Error: malloc execution.\n", 2), NULL);
 	}
-	init_img(&data->img);
-	init_map(data->map);
-	init_textures(data);
-	mlx_data_init(data);
+	data->mlx = NULL;
+	data->win = NULL;
+	data->win_height = WIN_HEIGHT;
+	data->win_width = WIN_HEIGHT;
 	data->player = player_init();
-	data->ray = raycast_init();
+	init_map(data->map);
+	init_img(&data->img);
+	init_textures(data);
 	return (data);
 }

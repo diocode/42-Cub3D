@@ -6,7 +6,7 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:06:46 by digoncal          #+#    #+#             */
-/*   Updated: 2024/04/04 17:07:39 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/11 17:05:59 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 
 # define S_W 1900 //screen width
 # define S_H 1000 //screen height
+# define WIN_HEIGHT 480
+# define WIN_WIDTH 640
 # define TILE_SIZE 30
 # define FOV 60 //field of view
 # define ROT_SPEED 0.05 //rotation speed
@@ -63,6 +65,8 @@ typedef struct s_player
 	t_pos	pos;
 	double	dir_x;
 	double	dir_y;
+	double	plane_x;
+	double	plane_y;
 	double	angle;
 	float	fov;
 	t_pos 	move;
@@ -71,21 +75,23 @@ typedef struct s_player
 
 typedef struct s_raycast
 {
-	double	ray_angle;
-	double	distance; //distance to the wall
-	int		wall; //flag for wall
-	int		index;
-	double 	line_height;
-	int 	draw_start;
-	int 	draw_end;
-	double	horiz_x;
-	double	horiz_y;
-	double	vert_x;
-	double	vert_y;
-	double  wall_x;
-	double  wall_y;
+	double	ray_angle;//camera
 	double 	dir_x;
 	double  dir_y;
+	double	distance; //wall distance
+	int		side; //flag for wall
+	int		map_x;
+	int		map_y;
+	int 	line_height;
+	int 	draw_start;
+	int 	draw_end;
+	double	wall;
+	double	horiz_x;//side distance
+	double	horiz_y;
+	double	vert_x;//delta distance
+	double	vert_y;
+	int		step_x;
+	int  	step_y;
 }		t_raycast;
 
 typedef struct s_textures
@@ -130,6 +136,8 @@ typedef struct s_data
 	t_map		*map;
 	t_textures	*tex;
 	t_player	*player;
+	int			win_height;
+	int			win_width;
 	void		*mlx;
 	void		*win;
 	t_img		img;
@@ -142,6 +150,8 @@ t_data			*init_data(void);
 void			init_img(t_img *img);
 void			mlx_data_init(t_data *data);
 bool			init_mlx_img(t_data *data, t_img *image, int width, int height);
+void			render_img(t_data *data);
+void			raycast_init(t_raycast *raycast);
 
 //free
 void			free_data(t_data *data);
@@ -172,6 +182,7 @@ bool			invalid_map(char **map);
 
 //render
 void			render(t_data *data);
+void			render_img(t_data *data);
 int     		handle_keys(int keysym, t_data *data);
 int    			ft_quit(t_data *data);
 
@@ -190,5 +201,6 @@ int				keypress_handle(int keysym, t_data *data);
 bool			move_player(t_data *data);
 
 void    		set_player(t_player *player);
+int				print_frame(t_data *data);
 
 #endif
