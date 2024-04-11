@@ -64,6 +64,9 @@ void    do_dda(t_data * data, t_raycast *ray)
             wall = 1;
         }
     }
+	  data->ray->vert_x = v_x;
+	  data->ray->vert_y = v_y;
+    return ((float)sqrt(pow(v_x - (float)data->player->pos.x, 2) + pow(v_y - (float)data->player->pos.y, 2)));
 }
 
 void    ray_info_init(int x, t_raycast *ray, t_data *data)
@@ -115,14 +118,14 @@ void    cast_rays(t_data *data)
         set_dda(ray, data);
         do_dda(data, ray);
         calculate_line_height(ray, data);
-		update_tex_pixels(data, x);
+		    update_tex_pixels(data, x);
         x++;
     }
 }
 
 int print_frame(t_data *data)
 {
-	render_img(data);
+    render_img(data);
     return (0);   
 }
 
