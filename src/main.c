@@ -6,13 +6,13 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:22:29 by digoncal          #+#    #+#             */
-/*   Updated: 2024/04/04 11:58:49 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/10 15:48:09 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static	void	dev_mod(t_data *data)
+/*static	void	dev_mod(t_data *data)
 {
 	int i = 0;
 	printf("\nNO-> \"%s\"\nSO-> \"%s\"\nWE-> \"%s\"\nEA-> \"%s\"\nF-> \"%s\"\nC-> \"%s\"\n\n", data->map->no, data->map->so, data->map->we, data->map->ea, data->map->f, data->map->c);
@@ -33,7 +33,7 @@ static	void	dev_mod(t_data *data)
 		i++;
 	}
 	printf("\n");
-}
+}*/
 
 int	main(int ac, char **av)
 {
@@ -47,9 +47,12 @@ int	main(int ac, char **av)
 	data = init_data();
 	if (!data || !valid_map(data, av[1]))
 		return (free_data(data), 1);
-	init_img(&data->img);
-	dev_mod(data); //DEV MOD
-	data->win = 0;
-	render(data);
-	free_data(data);
+	//dev_mod(data); //DEV MOD
+	mlx_data_init(data);
+	handle_textures(data);
+	render_img(data);
+	mlx_loop_hook(data->mlx, print_frame, NULL);
+    mlx_loop(data->mlx);
+	//free_data(data);
+	return (0);
 }

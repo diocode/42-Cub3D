@@ -6,7 +6,7 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 13:56:38 by digoncal          #+#    #+#             */
-/*   Updated: 2024/04/05 13:24:58 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:07:09 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,11 @@ void	mlx_data_init(t_data *data)
 	data->win = mlx_new_window(data->mlx, 780, 780, "cube_3d");
 	if (!data->win)
 		printf("mlx_win error\n");
-	data->img.mlx_img = mlx_new_image(data->mlx, 780, 780);
-	if (!data->img.mlx_img)
-		printf("mlx_img error!\n");
-	data->img.addr = (int *)mlx_get_data_addr(data->img.mlx_img, \
-	&data->img.bpp, &data->img.line_len, &data->img.endian);
+	//data->img.mlx_img = mlx_new_image(data->mlx, 780, 780);
+	//if (!data->img.mlx_img)
+	//	printf("mlx_img error!\n");
+	//data->img.addr = (int *)mlx_get_data_addr(data->img.mlx_img, \
+	//&data->img.bpp, &data->img.line_len, &data->img.endian);
 }
 
 t_data	*init_data(void)
@@ -142,12 +142,14 @@ t_data	*init_data(void)
 		free_data(data);
 		return (ft_putstr_fd("Error: malloc execution.\n", 2), NULL);
 	}
-	init_img(&data->img);
-	init_map(data->map);
-	init_textures(data);
-	data->player = player_init();
-	data->ray = raycast_init();
 	data->mlx = NULL;
 	data->win = NULL;
+	data->win_height = WIN_HEIGHT;
+	data->win_width = WIN_HEIGHT;
+	data->player = player_init();
+	init_map(data->map);
+	init_img(&data->img);
+	init_textures(data);
+	data->ray = raycast_init();
 	return (data);
 }

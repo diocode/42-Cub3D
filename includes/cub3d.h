@@ -6,7 +6,7 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:06:46 by digoncal          #+#    #+#             */
-/*   Updated: 2024/04/04 17:07:39 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:03:33 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 
 # define S_W 1900 //screen width
 # define S_H 1000 //screen height
+# define WIN_HEIGHT 480
+# define WIN_WIDTH 640
 # define TILE_SIZE 30
 # define FOV 60 //field of view
 # define ROT_SPEED 0.05 //rotation speed
@@ -134,6 +136,8 @@ typedef struct s_data
 	t_player	*player;
 	void		*mlx;
 	void		*win;
+	int			win_height;
+	int			win_width;
 	t_img		img;
 }	t_data;
 
@@ -173,7 +177,8 @@ char			*copy_map_line(const char *src, int len);
 bool			invalid_map(char **map);
 
 //render
-void			render(t_data *data);
+void			render_img(t_data *data);
+void			render_ray(t_data *data);
 int     		handle_keys(int keysym, t_data *data);
 int    			ft_quit(t_data *data);
 
@@ -187,5 +192,6 @@ bool			init_tex_pixels(t_data *data);
 void			update_tex_pixels(t_data *data, int x);
 
 void    		set_player(t_player *player);
+int				print_frame(t_data *data);
 
 #endif

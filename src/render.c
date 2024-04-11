@@ -6,7 +6,7 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:24:58 by gabrrodr          #+#    #+#             */
-/*   Updated: 2024/04/04 17:58:24 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:15:51 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,25 +151,34 @@ void    cast_rays(t_data *data)
 int print_frame(t_data *data)
 {
     //mlx_destroy_image(data->mlx, data->img.mlx_img);
-    data->img.mlx_img = mlx_new_image(data->mlx, S_W, S_H);
+    //data->img.mlx_img = mlx_new_image(data->mlx, S_W, S_H);
     //hook_player(data->player);
-	if (!init_tex_pixels(data))
-		return (1);
-	cast_rays(data);
-	render_frame(data);
-    mlx_put_image_to_window(data->mlx, data->win, data->img.mlx_img, \
-	0, 0);
+	render_img(data);
+	//cast_rays(data);
+	//render_frame(data);
+    //mlx_put_image_to_window(data->mlx, data->win, data->img.mlx_img, \
+	//0, 0);
     return (0);   
 }
 
-void	render(t_data *data)
+void    render_ray(t_data *data)
 {
-    mlx_data_init(data);
-	if (!handle_textures(data))
+    if (!init_tex_pixels(data))
 		return ;
-    set_player(data->player);
-    mlx_hook(data->win, KeyRelease, KeyReleaseMask, &handle_keys, data);
-    mlx_hook(data->win, DestroyNotify, StructureNotifyMask, &ft_quit, data);
-    mlx_loop_hook(data->mlx, print_frame, NULL);
-    mlx_loop(data->mlx);
+    //data->ray = raycast_init();
+    ft_memset(data->ray, 0, sizeof(t_raycast));
+    cast_rays(data);
+    render_frame(data);
+}
+
+void	render_img(t_data *data)
+{
+	//if (!handle_textures(data))
+	//	return ;
+    render_ray(data);
+    //cast_rays(data);
+    //render_frame(data);
+    //set_player(data->player);
+    //mlx_hook(data->win, KeyRelease, KeyReleaseMask, &handle_keys, data);
+    //mlx_hook(data->win, DestroyNotify, StructureNotifyMask, &ft_quit, data);
 }
