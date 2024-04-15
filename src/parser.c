@@ -114,8 +114,8 @@ bool	parse_player(t_data *data)
 				|| data->map->layout[i][j] == 'W'
 				|| data->map->layout[i][j] == 'E')
 			{
-				data->player->pos.x = j;
-				data->player->pos.y = i;
+				data->player->pos_x = j;
+				data->player->pos_y = i;
 				get_direction(data, data->map->layout[i][j]);
 				return (true);
 			}

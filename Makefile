@@ -6,7 +6,7 @@
 #    By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 13:27:18 by gabrrodr          #+#    #+#              #
-#    Updated: 2024/04/05 13:27:20 by gabrrodr         ###   ########.fr        #
+#    Updated: 2024/04/12 14:14:30 by gabrrodr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC =	src/main.c \
 		src/movement.c \
 		src/render_frame.c \
 		src/textures.c \
+		src/input.c \
 
 OBJ = $(SRC:.c=.o)
 
