@@ -47,7 +47,6 @@ static void	init_map(t_map *map)
 
 void	raycast_init(t_raycast *raycast)
 {
-	
 	raycast->ray_angle = 0;
 	raycast->dir_x = 0;
 	raycast->dir_y = 0;
