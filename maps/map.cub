@@ -1,7 +1,7 @@
 
 
 
-NO./maps/textures/wall_1.xpm
+NO./maps/textures/n.xpm
 F 10,20,230
 
 
@@ -9,9 +9,9 @@ F 10,20,230
 
 C    0,200,255
 
-                SO ./maps/textures/wall_2.xpm
-   WE     ./maps/textures/wall_3.xpm
-EA                                 ./maps/textures/wall_4.xpm
+                SO ./maps/textures/s.xpm
+   WE     ./maps/textures/w.xpm
+EA                                 ./maps/textures/e.xpm
         1111111111111111111111111
         1000000000110000010100001
         1001000001110000010100001

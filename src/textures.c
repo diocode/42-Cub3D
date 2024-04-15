@@ -6,7 +6,7 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:31:31 by digoncal          #+#    #+#             */
-/*   Updated: 2024/04/11 17:06:51 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/12 16:24:49 by digoncal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	*xpm_to_img(t_data *data, char *path)
 
 	if (init_texture_img(data, &tmp, path))
 		return (NULL);
-	buffer = ft_calloc(1, sizeof(buffer) * data->tex->size * data->tex->size);
+	buffer = ft_calloc(1, sizeof * buffer * data->tex->size * data->tex->size);
 	if (!buffer)
 		return (ft_putstr_fd("Error: invalid malloc.\n", 2), NULL);
 	y = 0;
@@ -61,8 +61,7 @@ bool	handle_textures(t_data *data)
 	data->tex->cc_ceiling = rgb_to_int(data->map->c);
 	data->tex->cc_floor = rgb_to_int(data->map->f);
 	if (!data->tex->cc_ceiling || !data->tex->cc_floor)
-		return (ft_putstr_fd("Error: invalid textures conversions.\n", 2)
-			, false);
+		return (ft_putstr_fd("Error: invalid textures convert.\n", 2), false);
 	data->tex->textures = ft_calloc(5, sizeof(int *));
 	if (!data->tex->textures)
 		return (ft_putstr_fd("Error: invalid malloc.\n", 2), false);
@@ -82,14 +81,14 @@ bool	init_tex_pixels(t_data *data)
 
 	if (data->tex->texture_pixels)
 		free_int_array(data->tex->texture_pixels);
-	data->tex->texture_pixels = ft_calloc(S_H + 1, \
-		sizeof(data->tex->texture_pixels));
+	data->tex->texture_pixels = ft_calloc(data->win_height + 1, \
+		sizeof * data->tex->texture_pixels);
 	if (!data->tex->texture_pixels)
 		return (ft_putstr_fd("Error: invalid malloc.\n", 2), false);
 	i = 0;
-	while (i < S_H)
+	while (i < data->win_height)
 	{
-		data->tex->texture_pixels[i] = ft_calloc(S_W + 1,
+		data->tex->texture_pixels[i] = ft_calloc(data->win_width + 1,
 				sizeof * data->tex->texture_pixels);
 		if (!data->tex->texture_pixels[i])
 			return (ft_putstr_fd("Error: invalid malloc.\n", 2), false);
@@ -98,41 +97,38 @@ bool	init_tex_pixels(t_data *data)
 	return (true);
 }
 
-static void	get_index(t_data *data)
+static void	get_index(t_data *data, t_raycast *ray)
 {
-	data->ray->ray_angle = fix_angle(data->ray->ray_angle);
-	if (!data->ray->wall)
+	if (ray->side == 0)
 	{
-		if (data->ray->ray_angle > M_PI / 2
-			&& data->ray->ray_angle < 3 * (M_PI / 2))
+		if (ray->dir_x < 0)
 			data->tex->index = WEST;
 		else
 			data->tex->index = EAST;
 	}
 	else
 	{
-		if (data->ray->ray_angle > 0 && data->ray->ray_angle < M_PI)
+		if (ray->dir_y > 0)
 			data->tex->index = SOUTH;
 		else
 			data->tex->index = NORTH;
 	}
 }
 
-void	update_tex_pixels(t_data *data, int x)
+void	update_tex_pixels(t_data *data, t_raycast *ray, int x)
 {
 	int			y;
 	int			color;
 
-	get_index(data);
-	data->tex->x = (int)(data->ray->wall * data->tex->size);
-	if ((!data->ray->wall && data->ray->dir_x < 0)
-		|| (data->ray->wall && data->ray->dir_y > 0))
+	get_index(data, ray);
+	data->tex->x = (int)(ray->wall * data->tex->size);
+	if ((!ray->side && ray->dir_x < 0) || (ray->side && ray->dir_y > 0))
 		data->tex->x = data->tex->size - data->tex->x - 1;
-	data->tex->step = 1.0 * data->tex->size / data->ray->line_height;
-	data->tex->pos = (data->ray->draw_start - S_W / 2
-			+ data->ray->line_height / 2) * data->tex->step;
-	y = data->ray->draw_start;
-	while (y < data->ray->draw_end)
+	data->tex->step = 1.0 * data->tex->size / ray->line_height;
+	data->tex->pos = (ray->draw_start - data->win_height / 2
+			+ ray->line_height / 2) * data->tex->step;
+	y = ray->draw_start;
+	while (y < ray->draw_end)
 	{
 		data->tex->y = (int)data->tex->pos & (data->tex->size - 1);
 		data->tex->pos += data->tex->step;

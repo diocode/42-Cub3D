@@ -6,7 +6,7 @@
 /*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:06:46 by digoncal          #+#    #+#             */
-/*   Updated: 2024/04/11 17:05:59 by gabrrodr         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:14:13 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,10 @@
 
 /*---------- MACROS ----------*/
 
-# define S_W 1900 //screen width
-# define S_H 1000 //screen height
-# define WIN_HEIGHT 480
+# define WIN_HEIGHT 640
 # define WIN_WIDTH 640
-# define TILE_SIZE 30
-# define FOV 60 //field of view
-# define ROT_SPEED 0.05 //rotation speed
-# define PLAYER_SPEED 2
-# define S_ROTATION 5
+# define ROT_SPEED 0.015 //rotation speed
+# define PLAYER_SPEED 0.0125
 # define TEXTURE_SIZE 64
 
 /*------------- Structures ---------------*/
@@ -56,21 +51,22 @@ typedef enum e_rotation
 
 typedef struct s_pos
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 }	t_pos;
 
 typedef struct s_player
 {
-	t_pos	pos;
+	double	pos_x;
+	double	pos_y;
 	double	dir_x;
 	double	dir_y;
 	double	plane_x;
 	double	plane_y;
 	double	angle;
-	float	fov;
 	t_pos 	move;
 	int 	rotate;
+	int 	moved;
 }	t_player;
 
 typedef struct s_raycast
@@ -187,18 +183,20 @@ int     		handle_keys(int keysym, t_data *data);
 int    			ft_quit(t_data *data);
 
 //render_frame
-double			fix_angle(double angle);
 void			render_frame(t_data *data);
 
 //textures
 bool			handle_textures(t_data *data);
 bool			init_tex_pixels(t_data *data);
-void			update_tex_pixels(t_data *data, int x);
+void			update_tex_pixels(t_data *data, t_raycast *ray, int x);
 
 //movement
+bool			move_player(t_data *data);
+
+//input
+void    		check_input(t_data *data);
 int				keyrelease_handle(int keysym, t_data *data);
 int				keypress_handle(int keysym, t_data *data);
-bool			move_player(t_data *data);
 
 void    		set_player(t_player *player);
 int				print_frame(t_data *data);
