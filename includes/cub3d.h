@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: digoncal <digoncal@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:06:46 by digoncal          #+#    #+#             */
-/*   Updated: 2024/07/22 18:32:19 by digoncal         ###   ########.fr       */
+/*   Updated: 2024/11/05 03:17:31 by digoncal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 # define ROT_SPEED 0.0045
 # define DIST_EDGE_MOUSE_WRAP 50
 
-
 /*------------- STRUCTURES ---------------*/
 
 enum e_direction
@@ -53,12 +52,12 @@ typedef struct s_pos
 
 typedef struct s_img
 {
-	void    *mlx_img;
-	int     *addr;
+	void	*mlx_img;
+	int		*addr;
 	int		bpp;
 	int		line_len;
 	int		endian;
-}               t_img;
+}			t_img;
 
 typedef struct s_textures
 {
@@ -67,27 +66,27 @@ typedef struct s_textures
 	int		**textures;
 	double	step;
 	double	pos;
-	int 	x;
-	int 	y;
+	int		x;
+	int		y;
 }				t_textures;
 
 typedef struct raycast
 {
-	t_pos 	dir;
-	t_pos	next_dist; //distance to next x or y-side (sideDist)
-	t_pos	grid_dist; //length of ray from one x or y-side to next x or y-side (deltaDist)
+	t_pos	dir;
+	t_pos	next_dist; //distance to next x or y-side
+	t_pos	grid_dist; //length of ray from one x or y-side to next x or y-side
 	int		step_x;
 	int		step_y;
 	int		map_x;
 	int		map_y;
-	int 	draw_start;
-	int 	draw_end;
+	int		draw_start;
+	int		draw_end;
 	bool	hit;
 	bool	side;
 	double	wall_dist;
 	double	wall_tex;
 	int		line_height;
-} t_raycast;
+}			t_raycast;
 
 typedef struct s_player
 {
@@ -102,27 +101,27 @@ typedef struct s_player
 
 typedef struct s_map_info
 {
-    char    *no;
-    char    *so;
-    char    *ea;
-    char    *we;
-    char    *f;
-    char    *c;
-    int   cc_ceiling;
-    int   cc_floor;
-}               t_map_info;
+	char	*so;
+	char	*no;
+	char	*ea;
+	char	*we;
+	char	*f;
+	char	*c;
+	int		cc_ceiling;
+	int		cc_floor;
+}			t_map_info;
 
 typedef struct s_data
 {
-    void        *mlx;
-    void        *win;
-    char        **map;
+	void		*mlx;
+	void		*win;
+	char		**map;
 	t_raycast	*ray;
-    t_map_info  *map_info;
-    t_img       img;
+	t_map_info	*map_info;
+	t_img		img;
 	t_player	*player;
-    t_textures	*tex;
-}               t_data;
+	t_textures	*tex;
+}				t_data;
 
 /*---------- FUNCTIONS ----------*/
 
@@ -152,7 +151,7 @@ void	free_int_array(int **arr);
 
 //RENDER GAME
 void	raycast(t_data *data);
-int 	render_game(t_data *data);
+int		render_game(t_data *data);
 void	render(t_data *data);
 
 //MOVEMNET
