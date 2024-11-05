@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_player.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: digoncal <digoncal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:57:41 by digoncal          #+#    #+#             */
-/*   Updated: 2024/07/22 17:18:51 by digoncal         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:19:51 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	parse_player(t_data *data, char **map)
 
 	players = 0;
 	if (!data->player)
-		return (ft_putstr_fd("Error: invalid player.\n", 2), false);
+		return (ft_putstr_fd("Error\ninvalid player.\n", 2), false);
 	pos.y = -1;
 	while (map[(int)++pos.y])
 	{
@@ -64,5 +64,5 @@ bool	parse_player(t_data *data, char **map)
 	}
 	if (players == 1)
 		return (true);
-	return (ft_putstr_fd("Error: invalid player.\n", 2), false);
+	return (ft_putstr_fd("Error\ninvalid player.\n", 2), false);
 }

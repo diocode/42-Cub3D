@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: digoncal <digoncal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:25:27 by digoncal          #+#    #+#             */
-/*   Updated: 2024/07/15 12:40:33 by digoncal         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:19:36 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static bool	invalid_map_elements(char const *str)
 			&& str[i] != 'N' && str[i] != 'S' && str[i] != 'W' && str[i] != 'E')
 		{
 			printf("str[i] = %c\n", str[i]);
-			return (ft_putstr_fd("Error: invalid map elements.\n", 2), true);
+			return (ft_putstr_fd("Error\ninvalid map elements.\n", 2), true);
 		}
 	}
 	return (false);
@@ -84,7 +84,7 @@ static bool	invalid_spaces(char **map)
 					&& map[i - 1][j] != ' '
 					&& map[i + 1] && map[i + 1][j] != '1'
 					&& map[i + 1][j] != ' ')
-					return (ft_putstr_fd("Error: invalid map "
+					return (ft_putstr_fd("Error\ninvalid map "
 							"borders.\n", 2), true);
 			j++;
 		}
@@ -112,9 +112,9 @@ bool	invalid_map(char **map)
 			if (!map[i][j])
 				break ;
 			if (invalid_borders(map[i]))
-				return (ft_putstr_fd("Error: invalid map borders.\n", 2), true);
+				return (ft_putstr_fd("Error\ninvalid map borders.\n", 2), true);
 			if (invalid_walls(map, i, j))
-				return (ft_putstr_fd("Error: invalid map walls.\n", 2), true);
+				return (ft_putstr_fd("Error\ninvalid map walls.\n", 2), true);
 			j++;
 		}
 	}

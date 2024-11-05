@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: digoncal <digoncal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 11:45:24 by digoncal          #+#    #+#             */
-/*   Updated: 2024/07/08 15:22:27 by digoncal         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:19:42 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,13 @@ bool	parse_map(t_data *data, char *file)
 
 	lines = map_lines(file);
 	if (lines < 3)
-		return (ft_putstr_fd("Error: invalid map.\n", 2), false);
+		return (ft_putstr_fd("Error\ninvalid map.\n", 2), false);
 	data->map = ft_calloc(lines + 1, sizeof(char *));
 	if (!data->map)
-		return (ft_putstr_fd("Error: invalid memory allocation.\n", 2), false);
+		return (ft_putstr_fd("Error\ninvalid memory allocation.\n", 2), false);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (ft_putstr_fd("Error: invalid file.\n", 2), false);
+		return (ft_putstr_fd("Error\ninvalid file.\n", 2), false);
 	save_map(data, fd);
 	close(fd);
 	if (border_check(data->map) || invalid_map(data->map))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: digoncal <digoncal@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 13:54:17 by digoncal          #+#    #+#             */
-/*   Updated: 2024/11/04 18:12:37 by digoncal         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:04:29 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	free_data(t_data *data)
 {
 	if (!data)
 		return ;
-	mlx_mouse_show(data->mlx, data->win);
 	if (data->img.mlx_img)
 		mlx_destroy_image(data->mlx, data->img.mlx_img);
 	if (data->win)

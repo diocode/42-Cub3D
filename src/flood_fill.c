@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: digoncal <digoncal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:06:52 by digoncal          #+#    #+#             */
-/*   Updated: 2024/07/17 13:04:38 by digoncal         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:18:23 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ bool	border_check(char **map)
 	if (!valid_border(map_copy))
 	{
 		free_array(map_copy);
-		return (ft_putstr_fd("Error: invalid map borders.\n", 2), true);
+		return (ft_putstr_fd("Error\ninvalid map borders.\n", 2), true);
 	}
 	free_array(map_copy);
 	return (false);

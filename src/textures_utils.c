@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: digoncal <digoncal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 18:14:24 by digoncal          #+#    #+#             */
-/*   Updated: 2024/07/18 18:52:56 by digoncal         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:19:56 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ bool	init_tex_pixels(t_data *data)
 	data->tex->texture_pixels = ft_calloc(WIN_HEIGHT + 1, \
 		sizeof * data->tex->texture_pixels);
 	if (!data->tex->texture_pixels)
-		return (ft_putstr_fd("Error: invalid malloc.\n", 2), false);
+		return (ft_putstr_fd("Error\ninvalid malloc.\n", 2), false);
 	i = 0;
 	while (i < WIN_HEIGHT)
 	{
 		data->tex->texture_pixels[i] = ft_calloc(WIN_WIDTH + 1,
 				sizeof * data->tex->texture_pixels);
 		if (!data->tex->texture_pixels[i])
-			return (ft_putstr_fd("Error: invalid malloc.\n", 2), false);
+			return (ft_putstr_fd("Error\ninvalid malloc.\n", 2), false);
 		i++;
 	}
 	return (true);

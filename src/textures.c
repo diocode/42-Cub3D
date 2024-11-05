@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: digoncal <digoncal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 18:07:27 by digoncal          #+#    #+#             */
-/*   Updated: 2024/07/18 18:07:27 by digoncal         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:20:03 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static bool	init_texture_img(t_data *data, t_img *image, char *path)
 	image->endian = 0;
 	image->mlx_img = mlx_xpm_file_to_image(data->mlx, path, &size, &size);
 	if (!image->mlx_img)
-		return (ft_putstr_fd("Error: minilibx failed.\n", 2), true);
+		return (ft_putstr_fd("Error\nminilibx failed.\n", 2), true);
 	image->addr = (int *) mlx_get_data_addr(image->mlx_img, &image->bpp, \
 		&image->line_len, &image->endian);
 	return (false);
@@ -40,7 +40,7 @@ static int	*xpm_to_img(t_data *data, char *path)
 		return (NULL);
 	buffer = ft_calloc(1, sizeof * buffer * TEX_SIZE * TEX_SIZE);
 	if (!buffer)
-		return (ft_putstr_fd("Error: invalid malloc.\n", 2), NULL);
+		return (ft_putstr_fd("Error\ninvalid malloc.\n", 2), NULL);
 	y = 0;
 	while (y < TEX_SIZE)
 	{
@@ -59,10 +59,10 @@ static int	*xpm_to_img(t_data *data, char *path)
 bool	handle_textures(t_data *data)
 {
 	if (!data->tex)
-		return (ft_putstr_fd("Error: textures not found.\n", 2), false);
+		return (ft_putstr_fd("Error\ntextures not found.\n", 2), false);
 	data->tex->textures = ft_calloc(5, sizeof(int *));
 	if (!data->tex->textures)
-		return (ft_putstr_fd("Error: invalid malloc.\n", 2), false);
+		return (ft_putstr_fd("Error\ninvalid malloc.\n", 2), false);
 	data->tex->textures[NORTH] = xpm_to_img(data, data->map_info->no);
 	data->tex->textures[SOUTH] = xpm_to_img(data, data->map_info->so);
 	data->tex->textures[EAST] = xpm_to_img(data, data->map_info->ea);

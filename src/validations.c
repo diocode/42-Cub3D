@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validation.c                                       :+:      :+:    :+:   */
+/*   validations.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: digoncal <digoncal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:45:01 by digoncal          #+#    #+#             */
-/*   Updated: 2024/07/08 14:35:12 by digoncal         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:20:08 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static bool	invalid_content(char *file)
 	}
 	close(fd);
 	if (flg)
-		return (ft_putstr_fd("Error: invalid map elements.\n", 2), true);
+		return (ft_putstr_fd("Error\ninvalid map elements.\n", 2), true);
 	return (false);
 }
 

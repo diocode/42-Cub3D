@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_identifiers.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: digoncal <digoncal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:05:51 by digoncal          #+#    #+#             */
-/*   Updated: 2024/07/08 14:42:51 by digoncal         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:19:28 by gabrrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,5 @@ bool	parse_identifiers(t_data *data, char *file)
 		data->map_info->cc_floor = rgb_to_int(data->map_info->f);
 		return (true);
 	}
-	return (ft_putstr_fd("Error: invalid identifiers.\n", 2), false);
+	return (ft_putstr_fd("Error\ninvalid identifiers.\n", 2), false);
 }
