@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gabrrodr <gabrrodr@student.42.fr>          +#+  +:+       +#+         #
+#    By: digoncal <digoncal@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 13:27:18 by gabrrodr          #+#    #+#              #
-#    Updated: 2024/04/12 14:14:30 by gabrrodr         ###   ########.fr        #
+#    Updated: 2025/02/17 14:46:53 by digoncal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
