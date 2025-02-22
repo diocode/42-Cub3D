@@ -1,4 +1,4 @@
-![so_long_banner-03](https://github.com/diocode/42-So_long/assets/107859177/f2d4d204-c35c-4eef-bb63-09aea6376882)
+![banners-14](https://github.com/user-attachments/assets/7f4dd121-e58a-4f02-97e9-5dd17f279bae)
 
 <p align="center">
 	<img src="https://img.shields.io/badge/status-finished-success?color=%2312bab9&style=flat-square"/>
@@ -17,10 +17,10 @@
 
 ## ABOUT ([Subject](/.github/en.subject.pdf))
 
-<br>
-
 <p align="center">
-  <img src="https://github.com/diocode/42-So_long/blob/master/.github/so_long.gif" alt="Alt Text">
+  <img src="https://github.com/diocode/42-So_long/blob/master/.github/cub3d_gif.gif" alt="Alt Text">
+</p>
+  
 </p>
 
 <br>
