@@ -4,7 +4,7 @@
 	<img src="https://img.shields.io/badge/status-finished-success?color=%2312bab9&style=flat-square"/>
 	<img src="https://img.shields.io/badge/evaluated-05%20%2F%2011%20%2F%202024-success?color=%2312bab9&style=flat-square"/>
 	<img src="https://img.shields.io/badge/score-110%20%2F%20100-success?color=%2312bab9&style=flat-square"/>
-	<img src="https://img.shields.io/github/last-commit/diocode/Cub3D?color=%2312bab9&style=flat-square"/>
+	<img src="https://img.shields.io/github/last-commit/diocode/42-Cub3D?color=%2312bab9&style=flat-square"/>
 	<a href='https://www.linkedin.com/in/diogo-gsilva' target="_blank"><img alt='Linkedin' src='https://img.shields.io/badge/LinkedIn-100000?style=flat-square&logo=Linkedin&logoColor=white&labelColor=0A66C2&color=0A66C2'/></a>
 </p>
 
