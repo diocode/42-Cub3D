@@ -17,10 +17,10 @@
 
 ## ABOUT ([Subject](/.github/en.subject.pdf))
 
+<br>
+
 <p align="center">
-  <img src="https://github.com/diocode/42-So_long/blob/master/.github/cub3d_gif.gif" alt="Alt Text">
-</p>
-  
+  <img src="https://raw.githubusercontent.com/diocode/42-Cub3D/master/.github/cub3d_gif.gif" alt="Alt Text" width="600" height="495.75">
 </p>
 
 <br>
